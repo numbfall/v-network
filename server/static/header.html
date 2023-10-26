@@ -1,24 +1,12 @@
-<style type="text/tailwindcss">
-  @layer components {
-    .header-padding {
-      @apply py-[8px] px-[16px] sm:pt-[10px] sm:pr-[32px] sm:pb-[10px] sm:pl-[35.2px] border-0;
-    }
-  }
-</style>
-<header class="header-padding">
-  <div class="flex items-center">
-    <a href="https://indy.nxd.foundation">
-      <div class="flex items-center">
-        <div class="header-logo w-[40px] h-[40px]"></div>
-        <p class="lead">
-          <span
-            class="lead-title text-[20px] md:text-[28px] text-white ml-2 font-semibold"
-            >NordXDataspace</span
-          >
-        </p>
-      </div>
-    </a>
+<header>
+  <h1><a href="/">FHWA-Ledger</a></h1>
+<!--   <p class="lead">Contributed by the Province of British Columbia</p> -->
+  {% if INFO_SITE_URL %}
 
-    <span class="text-[14px] ml-2 mt-1 sm:mt-2">Indy Ledger</span>
-  </div>
+  <small> -
+      <a class="info-site" href="{{ INFO_SITE_URL }}" target="_blank">{{ INFO_SITE_TEXT }} <i class="fa fa-external-link"></i></a>
+  </small>
+
+  {% endif %}
+
 </header>

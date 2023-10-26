@@ -2,7 +2,6 @@
 var app = new Vue({
   el: '#vue-outer',
   data: {
-    nodeOperatorsList: null,
     anonymous: true,
     init_error: null,
     ready: false,
@@ -22,30 +21,9 @@ var app = new Vue({
     }
   },
   mounted: function () {
-    this.fetchNodeOperatorsList();
     this.fetchStatus();
   },
   methods: {
-    getNodeOperatorByAlias: function(nodeAlias){
-      var self = this;
-      if(self.nodeOperatorsList === null) {return null}
-      return nodeAlias in self.nodeOperatorsList ? self.nodeOperatorsList[nodeAlias] : null
-    },
-    fetchNodeOperatorsList: function() {
-      var self = this;
-      var nodeOperatorsListURL = 'https://raw.githubusercontent.com/decentralised-dataexchange/nordxdataspace/main/node-operators/list.json';
-      fetch(nodeOperatorsListURL).then(function (response) {
-        if (response.ok) {
-          response.json().then(function (result) {
-            self.nodeOperatorsList = result.nodeOperators;
-          });
-        }
-      }).catch(
-        function (err) {
-          console.error("Error fetching node operator list:", err);
-        }
-      );
-    },
     fetchStatus: function () {
       var self = this;
       fetch('/status?validators=' + (this.ready ? '1' : '')).then(function (response) {
@@ -72,81 +50,72 @@ var app = new Vue({
       );
     },
     formatValidatorStatus: function (status) {
-      var self = this;
       var formatted = {
         err: !Array.isArray(status),
         rows: []
       };
 
       if (!formatted.err) {
-        const nodeOperatorKeysList = Object.keys(self.nodeOperatorsList);
-        for (var idno = 0; idno < nodeOperatorKeysList.length; idno++) {
-          for (var idx = 0; idx < status.length; idx++) {
-            var node = status[idx];
-            var info = node.Node_info;
+        for (var idx = 0; idx < status.length; idx++) {
+          var node = status[idx],
+            info = node.Node_info,
+            result = {};
 
-            if (info.Name === nodeOperatorKeysList[idno]) {
-              const nodeOperator = self.getNodeOperatorByAlias(info.Name);
-              result = {};
-              result.nodeOperator = nodeOperator;
-              result.name = info.Name;
-              result.nodeNumber = info.Name.split("Node")[1];
-              result.did = info.did;
-              result.state = node.state;
-              if (!result.state && node.enabled)
-                result.state = 'unknown';
-              result.indy_version = (node.software || node.Software || {})['indy-node'] || '?';
+          result.name = info.Name;
+          result.did = info.did;
+          result.state = node.state;
+          if (!result.state && node.enabled)
+            result.state = 'unknown';
+          result.indy_version = (node.software || node.Software || {})['indy-node'] || '?';
 
-              var upt = info.Metrics.uptime,
-                upt_s = upt % 60,
-                upt_m = Math.floor(upt % 3600 / 60),
-                upt_h = Math.floor(upt % 86400 / 3600),
-                upt_d = Math.floor(upt / 86400),
-                upt_parts = []
-              if (upt_d) { upt_parts.push('' + upt_d + ' days') };
-              if (upt_h || upt_parts.length) { upt_parts.push('' + upt_h + ' hours') };
-              if (upt_m || upt_parts.length) { upt_parts.push('' + upt_m + ' minutes') };
-              upt_parts.push('' + upt_s + ' seconds');
-              result.uptime = upt_parts.join(', ');
+          var upt = info.Metrics.uptime,
+            upt_s = upt % 60,
+            upt_m = Math.floor(upt % 3600 / 60),
+            upt_h = Math.floor(upt % 86400 / 3600),
+            upt_d = Math.floor(upt / 86400),
+            upt_parts = []
+          if (upt_d) { upt_parts.push('' + upt_d + ' days') };
+          if (upt_h || upt_parts.length) { upt_parts.push('' + upt_h + ' hours') };
+          if (upt_m || upt_parts.length) { upt_parts.push('' + upt_m + ' minutes') };
+          upt_parts.push('' + upt_s + ' seconds');
+          result.uptime = upt_parts.join(', ');
 
-              if (node.Pool_info.Unreachable_nodes_count) {
-                result.unreachable = node.Pool_info.Unreachable_nodes.join(', ');
-              } else {
-                result.unreachable = null;
+          if (node.Pool_info.Unreachable_nodes_count) {
+            result.unreachable = node.Pool_info.Unreachable_nodes.join(', ');
+          } else {
+            result.unreachable = null;
+          }
+
+          result.progress = node.Pool_info.Reachable_nodes_count / node.Pool_info.Total_nodes_count;
+          result.dash_array = 339.292;
+          result.dash_offset = result.dash_array * (1 - result.progress);
+
+          var shorten = function (val) {
+            if (typeof val === 'number') {
+              if (val > 1000000) {
+                return (val / 1000000).toPrecision(3) + 'M';
               }
-
-              result.progress = node.Pool_info.Reachable_nodes_count / node.Pool_info.Total_nodes_count;
-              result.dash_array = 339.292;
-              result.dash_offset = result.dash_array * (1 - result.progress);
-
-              var shorten = function (val) {
-                if (typeof val === 'number') {
-                  if (val > 1000000) {
-                    return (val / 1000000).toPrecision(3) + 'M';
-                  }
-                  if (val > 1000) {
-                    return (val / 1000).toPrecision(3) + 'K';
-                  }
-                  if (Math.trunc(val) == val) {
-                    return val;
-                  }
-                  return val.toPrecision(3);
-                }
+              if (val > 1000) {
+                return (val / 1000).toPrecision(3) + 'K';
+              }
+              if (Math.trunc(val) == val) {
                 return val;
               }
-              var txns = [],
-                tx_avgs = info.Metrics['average-per-second'],
-                tx_counts = info.Metrics['transaction-count'];
-              txns.push('' + shorten(tx_counts.config) + ' config');
-              txns.push('' + shorten(tx_counts.ledger) + ' ledger');
-              txns.push('' + shorten(tx_counts.pool) + ' pool');
-              txns.push('' + shorten(tx_avgs['read-transactions']) + '/s read');
-              txns.push('' + shorten(tx_avgs['write-transactions']) + '/s write');
-              result.txns = txns.join(', ');
-              formatted.rows.push(result);
-              break;
+              return val.toPrecision(3);
             }
+            return val;
           }
+          var txns = [],
+            tx_avgs = info.Metrics['average-per-second'],
+            tx_counts = info.Metrics['transaction-count'];
+          txns.push('' + shorten(tx_counts.config) + ' config');
+          txns.push('' + shorten(tx_counts.ledger) + ' ledger');
+          txns.push('' + shorten(tx_counts.pool) + ' pool');
+          txns.push('' + shorten(tx_avgs['read-transactions']) + '/s read');
+          txns.push('' + shorten(tx_avgs['write-transactions']) + '/s write');
+          result.txns = txns.join(', ');
+
+          formatted.rows.push(result);
         }
       }
 
