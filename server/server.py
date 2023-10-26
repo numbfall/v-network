@@ -20,7 +20,7 @@ from .anchor import (
     get_genesis_file,
 )
 
-logging.basicConfig(level=(os.getenv("LOG_LEVEL", "").upper() or logging.INFO))
+logging.basicConfig(level=logging.INFO)
 LOGGER = logging.getLogger(__name__)
 
 PATHS = {"python": shutil.which("python3")}
@@ -280,6 +280,10 @@ async def genesis(request):
 # Easily write dids for new identity owners
 @ROUTES.post("/register")
 async def register(request):
+
+    if not (request.query.get("ca") and request.query.get("ca") != "" and request.query.get("ca") == "true"):
+        return json_response({"error": "origin not allowed!"}, status=400)
+
     if not TRUST_ANCHOR.ready:
         return not_ready()
 
