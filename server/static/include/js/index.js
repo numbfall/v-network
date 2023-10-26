@@ -61,7 +61,9 @@ var app = new Vue({
             info = node.Node_info,
             result = {};
 
-          result.name = info.Name;
+            console.log(info.Name.split("IGRANT")[1]);
+
+          result.name = info.Name.split("IGRANT")[1];
           result.did = info.did;
           result.state = node.state;
           if (!result.state && node.enabled)

@@ -73,7 +73,7 @@ ANONYMOUS = os.getenv("ANONYMOUS")
 ANONYMOUS = bool(ANONYMOUS and ANONYMOUS != "0" and ANONYMOUS.lower() != "false")
 LEDGER_SEED = os.getenv("LEDGER_SEED")
 if not LEDGER_SEED and not ANONYMOUS:
-    LEDGER_SEED = "000000000000000000000000Trustee1"
+    LEDGER_SEED = "000000000000000000IGRANTTrustee1"
 
 REGISTER_NEW_DIDS = os.getenv("REGISTER_NEW_DIDS", False)
 REGISTER_NEW_DIDS = bool(
@@ -628,16 +628,12 @@ class AnchorHandle:
 
         ret = []
         for node in node_aliases:
-            try:
-                reply = json.loads(node_data[node])
-                if "result" not in reply:
-                    continue
-                data = reply["result"].get("data")
-                data["Node_info"]["Name"] = node
-                ret.append(data)
-            # Some of the nodes a not reachable.
-            except json.decoder.JSONDecodeError:
+            reply = json.loads(node_data[node])
+            if "result" not in reply:
                 continue
+            data = reply["result"].get("data")
+            data["Node_info"]["Name"] = node
+            ret.append(data)
         return ret
 
     @property

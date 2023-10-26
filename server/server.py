@@ -154,10 +154,7 @@ async def ledger_json(request):
     last_modified = None
     results = []
     for row in rows:
-        try:
-            last_modified = max(last_modified, row[1]) if last_modified else row[1]
-        except TypeError:
-            last_modified = row[1]
+        last_modified = max(last_modified, row[1]) if last_modified else row[1]
         results.append(json.loads(row[3]))
     if not results and page > 1:
         data = {"detail": "Invalid page."}
