@@ -14,6 +14,7 @@
       crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
   <script src="include/js/common.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
 
   {% include 'analytics.html' %}
 
@@ -40,6 +41,57 @@
             </p>
           </div>
         </div>
+
+        <div class="columns-1 md:columns-2">
+          <div class="panel panel-default panel-ledger-status" style="display: none" v-show="ready">
+            <div class="panel-heading">
+              <h2>
+                <span class="fa fa-sitemap"></span>
+                Ledger State
+              </h2>
+            </div>
+            <div class="panel-body">
+              <div class="panel panel-node" v-if="syncing">
+                <div class="panel-body loading">
+                  <p>
+                    <span class="fa fa-info-circle"></span> Fetching transactions
+                  </p>
+                </div>
+              </div>
+              <p>
+                View the state of the ledgers:
+              </p>
+              <p>
+                <a href="/browse/domain" class="tool"><span class="fa fa-chevron-right left"></span>Domain</a>
+                <br>
+                <a href="/browse/pool" class="tool"><span class="fa fa-chevron-right left"></span>Pool</a>
+                <br>
+                <a href="/browse/config" class="tool"><span class="fa fa-chevron-right left"></span>Config</a>
+              </p>
+            </div>
+          </div>
+
+          <div class="panel panel-default connect">
+            <div class="panel-heading">
+              <h2>
+                <span class="fa fa-plug"></span>
+                Connect to the Network
+              </h2>
+            </div>
+            <div class="panel-body">
+              <p>
+                Download the genesis transaction file to connect to the network.
+              </p>
+              <div class="form-group">
+                <a href="/genesis" class="tool-button"><span class="fa fa-download left"></span>Genesis Transaction</a>
+                <span class="tool-tag">JSON</span>
+              </div>
+            </div>
+          </div>
+          
+
+        </div>
+        
         <div class="panel panel-default panel-node-status" style="display: none" v-show="ready && ! anonymous">
           <div class="panel-heading">
             <h2>
@@ -94,55 +146,7 @@
           </div>
         </div>
 
-        <div class="panel panel-default panel-ledger-status" style="display: none" v-show="ready">
-          <div class="panel-heading">
-            <h2>
-              <span class="fa fa-sitemap"></span>
-              Ledger State
-            </h2>
-          </div>
-          <div class="panel-body">
-            <div class="panel panel-node" v-if="syncing">
-              <div class="panel-body loading">
-                <p>
-                  <span class="fa fa-info-circle"></span> Fetching transactions
-                </p>
-              </div>
-            </div>
-            <p>
-              View the state of the ledgers:
-            </p>
-            <p>
-              <a href="/browse/domain" class="tool"><span class="fa fa-chevron-right left"></span>Domain</a>
-              <br>
-              <a href="/browse/pool" class="tool"><span class="fa fa-chevron-right left"></span>Pool</a>
-              <br>
-              <a href="/browse/config" class="tool"><span class="fa fa-chevron-right left"></span>Config</a>
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <aside class="col-tools" style="display: none" v-show="ready">
-        <div class="panel panel-side connect">
-          <div class="panel-heading">
-            <h2>
-              <span class="fa fa-plug"></span>
-              Connect to the Network
-            </h2>
-          </div>
-          <div class="panel-body">
-            <p>
-              Download the genesis transaction file to connect to the network.
-            </p>
-            <div class="form-group">
-              <a href="/genesis" class="tool-button"><span class="fa fa-download left"></span>Genesis Transaction</a>
-              <span class="tool-tag">JSON</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="panel panel-side authorize" v-if="register_new_dids">
+        <div class="panel panel-default authorize" v-if="register_new_dids">
           <div class="panel-heading">
             <h2>
               <span class="fa fa-key"></span>
@@ -160,7 +164,7 @@
                 &nbsp; <input type="radio" value="did" v-model="reg_info.reg_type" id="reg-did">
                   <label for="reg-did" class="tool-label inline">Register from DID</label>
               </div>
-
+  
               <div class="form-group" v-if="reg_info.reg_type == 'seed'">
                 <label class="tool-label">Wallet seed (32 characters or base64)</label>
                 <input
@@ -211,7 +215,7 @@
                 <button class="tool-button" type="submit" name="register"><span class="fa fa-sign-in left"></span>Register DID</button>
               </div>
             </form>
-
+  
             <div class="register-result" v-if="reg_result">
               <h3>Identity successfully registered:</h3>
               <code>
@@ -225,8 +229,10 @@
             </div>
           </div>
         </div>
+        
+      </div>
 
-      </aside>
+
     </div>
   </main>
   {% endraw %}
