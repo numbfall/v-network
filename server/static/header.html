@@ -1,6 +1,28 @@
-<header>
-  <h1><a href="/">{{ LEDGER_INSTANCE_NAME }}</a></h1>
-  <!-- <p class="lead">Contributed by the Province of British Columbia</p> -->
+<style type="text/tailwindcss">
+  @layer components {
+    .header-padding {
+      @apply py-[8px] px-[16px] sm:pt-[10px] sm:pr-[32px] sm:pb-[10px] sm:pl-[35.2px] border-0;
+    }
+  }
+</style>
+
+<header class="header-padding">
+  <div class="flex items-center">
+    <a href="/">
+      <div class="flex items-center">
+        <p class="lead">
+          <span
+            class="lead-title text-[20px] md:text-[28px] text-white ml-2 font-semibold"
+            >{{ LEDGER_INSTANCE_NAME }} Blockchain Ledger</span
+          >
+        </p>
+      </div>
+    </a>
+  </div>
+</header>
+
+<!-- <header>
+  <h1><a href="/">{{ LEDGER_INSTANCE_NAME }} Blockchain Ledger</a></h1>
   {% if INFO_SITE_URL %}
 
   <small> -
@@ -9,4 +31,4 @@
 
   {% endif %}
 
-</header>
+</header> -->
