@@ -29,21 +29,45 @@
 }
 
 .blink {
-  animation: blink-animation 0.5s steps(5, start) infinite;
   -webkit-animation: blink-animation 0.5s steps(5, start) infinite;
+  animation: blink-animation 0.5s steps(5, start) infinite;
   filter: drop-shadow(0px 1px 1px #6eff3a);
 }
 
-.Node2 .blink {
-  animation-delay: 900ms;
-  animation: blink-animation 1s steps(5, start) infinite;
-  -webkit-animation: blink-animation 1s steps(5, start) infinite;
+.node-status:nth-child(odd) .blink {
+  -webkit-animation: blink-animation-2 0.3s steps(5, start) infinite;
+  animation: blink-animation-2 0.3s steps(5, start) infinite;
 }
 
-.Node4 .blink {
+.panel-node .node-status:nth-child(1) .blink {
   animation-delay: 300ms;
-  animation: blink-animation-2 0.3s steps(5, start) infinite;
-  -webkit-animation: blink-animation-2 0.3s steps(5, start) infinite;
+}
+.panel-node .node-status:nth-child(2) .blink {
+  animation-delay: 600ms;
+}
+.panel-node .node-status:nth-child(3) .blink {
+  animation-delay: 900ms;
+}
+.panel-node .node-status:nth-child(4) .blink {
+  animation-delay: 1200ms;
+}
+.panel-node .node-status:nth-child(5) .blink {
+  animation-delay: 1500ms;
+}
+.panel-node .node-status:nth-child(6) .blink {
+  animation-delay: 1800ms;
+}
+.panel-node .node-status:nth-child(7) .blink {
+  animation-delay: 2100ms;
+}
+.panel-node .node-status:nth-child(8) .blink {
+  animation-delay: 2400ms;
+}
+.panel-node .node-status:nth-child(9) .blink {
+  animation-delay: 2700ms;
+}
+.panel-node .node-status:nth-child(10) .blink {
+  animation-delay: 3000ms;
 }
 
 .orange {

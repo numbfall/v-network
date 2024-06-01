@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <meta charset="utf-8">
@@ -8,7 +8,7 @@
   <link rel="icon" href="/include/img/ledger.png" type="image/png">
   <title>{{ LEDGER_INSTANCE_NAME }} Blockchain Ledger</title>
   <link href="/include/css/index.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  <!-- <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"> -->
   <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"
     integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
@@ -117,7 +117,7 @@
                 Error loading validator node status.
               </p>
             </div>
-            <template v-if="status && status.rows">
+            <template v-for="n in 2" v-if="status && status.rows">
               <div class="panel-body node-status" v-for="row in status.rows">
                 <div class="node-status-left">
                   <!-- <label class="node-name"><span class="nodeval-name">{{ row.name }}</span></label> -->
@@ -156,8 +156,8 @@
                               width=".62995" height="2.1544" ry=".28635" />
                           </g>
                         </g>
-                        <rect class="orange" transform="matrix(.9832 .18253 -.096504 .99533 0 0)" x="96.132" y="75.42" width="2.2085"
-                          height="1.2627" ry=".59192" fill="#ffa700" stroke-width=".24612" />
+                        <rect class="orange" transform="matrix(.9832 .18253 -.096504 .99533 0 0)" x="96.132" y="75.51"
+                          width="2.2085" height="1.2627" ry=".59192" fill="#ffa700" stroke-width=".24612" />
                         <rect transform="matrix(.9832 .18253 -.096504 .99533 0 0)" x="99.021" y="75.49" width="2.2085"
                           height="1.2627" ry=".59192" fill="#888" stroke-width=".24612" />
                         <rect class="blink" transform="matrix(.9832 .18253 -.096504 .99533 0 0)" x="99.021" y="75.49"
