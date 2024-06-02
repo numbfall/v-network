@@ -882,12 +882,15 @@ class LedgerCache:
         if txn_type:
             sql += " AND txn.txntype = ?"
             params = (*params, txn_type)
+        # add order by clause 
+        sql += " ORDER BY txn.seqno DESC"
         select_sql = (sql + " LIMIT ? OFFSET ?").format(select_fields)
         async with await self.query(select_sql, (*params, limit, offset)) as cursor:
             while True:
                 rows = await cursor.fetchmany()
                 for row in rows:
-                    result.append(row)
+                    # change append to insert
+                    result.insert(0, row)
                 if not rows:
                     break
         if count:

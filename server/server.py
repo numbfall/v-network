@@ -131,10 +131,18 @@ async def ledger_json(request):
     if not TRUST_ANCHOR.ready:
         return not_ready()
 
+    count = await TRUST_ANCHOR.get_max_seqno(request.match_info["ledger_name"])
     page = int(request.query.get("page", 1))
     page_size = int(request.query.get("page_size", 100))
-    start = (page - 1) * page_size + 1
-    end = start + page_size - 1
+    start = count - (page - 1) * page_size
+    if page_size > start:
+        end = 1
+    else:
+        end = start - page_size + 1
+    # original ends
+    # start = (page - 1) * page_size + 1
+    # end = start + page_size - 1
+    o_start = (page - 1) * page_size + 1
     query = request.query.get("query")
     if query is not None and not query.strip():
         query = None
@@ -144,11 +152,12 @@ async def ledger_json(request):
 
     if txn_type is not None or query is not None:
         rows, count = await TRUST_ANCHOR.get_txn_search(
-            request.match_info["ledger_name"], query, txn_type, page_size, start - 1
+            request.match_info["ledger_name"], query, txn_type, page_size, o_start - 1
         )
     else:
         rows = await TRUST_ANCHOR.get_txn_range(
-            request.match_info["ledger_name"], start, end
+            # ends swapped
+            request.match_info["ledger_name"], end, start
         )
         count = await TRUST_ANCHOR.get_max_seqno(request.match_info["ledger_name"])
     last_modified = None
@@ -158,7 +167,8 @@ async def ledger_json(request):
             last_modified = max(last_modified, row[1]) if last_modified else row[1]
         except TypeError:
             last_modified = row[1]
-        results.append(json.loads(row[3]))
+            # change append to insert
+        results.insert(0, json.loads(row[3]))
     if not results and page > 1:
         data = {"detail": "Invalid page."}
         response = json_response(data, status=404)

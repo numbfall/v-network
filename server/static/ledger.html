@@ -93,7 +93,7 @@
                 <table class="ledger-data" v-if="txns.length">
                   <tbody>
                     <tr class="ledger-row" v-for="entry in txns">
-                      <td class="ledger-index"><span class="number">#{{entry.txnMetadata.seqNo}}</span></td>
+                      <td class="ledger-index"><span class="number">{{entry.txnMetadata.seqNo}}</span></td>
                       <td class="ledger-entry">
                         <template v-if="entry.txnMetadata.txnId">
                           <div class="ledger-entry-title">
