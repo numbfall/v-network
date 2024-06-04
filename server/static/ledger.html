@@ -90,6 +90,15 @@
               </div>
               <template v-if="loaded">
                 {% raw %}
+
+<!-- TRY GRIDS -->
+
+<div class="grid_container">
+  <div class="grid_main" styles="grid-area: main"><table><tr><td>HI</td></tr></table></div>
+  <div class="grid_right" styles="grid-area: right"></div>
+</div>
+
+<!-- END GRIDS -->
                 <table class="ledger-data" v-if="txns.length">
                   <tbody>
                     <tr class="ledger-row" v-for="entry in txns">
@@ -282,10 +291,13 @@
                             <label>Accumulator value:</label> <span class="ident">{{entry.txn.data.value.accum}}</span>
                           </div>
                         </template>
-                        <div class="ledger-entry-title active" @click.prevent="toggleData(entry.index)">
+                        <!-- <div class="ledger-entry-title active" @click.prevent="toggleData(entry.index)">
                           Raw Data <span :class="'fa fa-chevron-' + (entry.expanded ? 'up' : 'down')"></span>
                         </div>
-                        <div class="raw-data" v-if="entry.expanded">{{entry.json}}</div>
+                        <div class="raw-data" v-if="entry.expanded">{{entry.json}}</div> -->
+                        <div class="block misc" @click="clickidyClick(entry)">
+<button>Raw Data</button>
+                        </div>
                       </td>
                     </tr>
                   </tbody>
@@ -294,6 +306,9 @@
                   <p>
                     <span class="fa fa-warning"></span> No transactions
                   </p>
+                </div>
+                <div v-if="detailSelected">
+                  {{ detailSelected.json }}
                 </div>
                 {% endraw %}
               </template>

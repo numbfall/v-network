@@ -73,6 +73,7 @@ var app = new Vue({
     reqno: 0,
     txn_type: '',
     txns: [],
+    detailSelected: ''
   },
   mounted: function () {
     if (window.history && history.pushState) {
@@ -102,6 +103,9 @@ var app = new Vue({
     }
   },
   methods: {
+    clickidyClick: function (item) {
+      this.detailSelected = item;
+    },
     load: function () {
       this.loadPageParams();
       this.loadPage();

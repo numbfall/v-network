@@ -11,7 +11,8 @@ var app = new Vue({
     register_new_dids: false,
     loading: false,
     status: null,
-    syncing: false
+    syncing: false,
+    ticker: null
   },
   computed: {
     role_options: function () {
@@ -22,6 +23,10 @@ var app = new Vue({
   },
   mounted: function () {
     this.fetchStatus();
+    this.timer = setInterval(this.fetchStatus, 1000); 
+  },
+  beforeDestroy() {  
+    clearInterval(this.ticker);
   },
   methods: {
     fetchStatus: function () {
@@ -159,6 +164,6 @@ var app = new Vue({
           self.loading = false;
         }
       );
-    }
+    } 
   }
 });
