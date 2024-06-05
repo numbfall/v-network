@@ -29,15 +29,26 @@
     <div :class="'row-outer' + (anonymous ? ' anonymous' : '')">
 
       <div class="col-main">
-        <div class="panel panel-info" style="display: none" v-show="init_error">
-          <div class="panel-body error">
+        <div style="display: none" v-show="init_error">
+          <div class="error">
             <p>
               {{ init_error }}
             </p>
           </div>
         </div>
-        <div class="panel panel-info" style="display: none" v-show="! ready && ! init_error">
-          <div class="panel-body not-ready">
+        <div style="display: none" v-show="! ready && ! init_error">
+          <div class="not-ready">
+            <div class="lds-grid">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
             <p>
               Connecting to server...
             </p>
@@ -164,8 +175,10 @@
                   <div class="node-status-right">
                     <dl class="props">
                       <dt>Node properties</dt>
-                      <dd class="node-name"><span class="label">Node:</span> <span class="nodeval-name">{{ row.name }}</span></dd>
-                      <dd class="node-did"><span class="label">DID:</span> <span class="nodeval-did">{{ row.did }}</span></dd>
+                      <dd class="node-name"><span class="label">Node:</span> <span class="nodeval-name">{{ row.name
+                          }}</span></dd>
+                      <dd class="node-did"><span class="label">DID:</span> <span class="nodeval-did">{{ row.did
+                          }}</span></dd>
                       <dd class="node-state" v-if="row.state"><span class="label">State:</span> <span
                           class="nodeval-state">{{ row.state }}</span></dd>
                       <dd class="node-uptime"><span class="label">Uptime:</span> <span class="nodeval-uptime">{{
@@ -173,7 +186,8 @@
                       <dd class="node-txns"><span class="label">Txns:</span> <span class="nodeval-txns">{{ row.txns
                           }}</span></dd>
                       <dd class="node-unreach" v-if="row.unreachable"><span class="lavel">Unreachable hosts:</span>
-                        <span class="nodeval-unreach">{{ row.unreachable }}</span></dd>
+                        <span class="nodeval-unreach">{{ row.unreachable }}</span>
+                      </dd>
                       <dd class="node-indyver"><span class="label">indy-node version:</span> <span
                           class="nodeval-indyver">{{ row.indy_version }}</span></dd>
                     </dl>
