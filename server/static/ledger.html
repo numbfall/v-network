@@ -113,7 +113,7 @@
             <h1 class="detail_heading">
               Transaction Details
             </h1>
-            <div class="detail_close" @click="detailClick(detailSelected = null)"></div>
+            <div class="detail_close" @click="detailSelected.expanded = false; detailSelected = null;"></div>
             <div class="detail_txn_no"><span>{{detailSelected.txnMetadata.seqNo}}</span></div>
             <div>
               <template v-if="detailSelected.txnMetadata.txnId">
