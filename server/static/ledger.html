@@ -10,7 +10,8 @@
   <link href="/include/css/index.css?v=1" rel="stylesheet">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+    rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
   <script src="/include/js/common.js"></script>
   <script type="text/javascript" src="http://livejs.com/live.js"></script>
@@ -39,9 +40,14 @@
             </div>
             <div>Loading ledger ...</div>
           </div>
-
-          <div class="ledger-txns" style="display: none" v-show="true">
-
+          <div class="error" v-if="error">
+            {% raw %}
+            <p>
+              <span class="fa fa-warning"></span> {{error}}
+            </p>
+            {% endraw %}
+          </div>
+          <template v-if="loaded">
             <div class="ledger_nav_top">
               <div class="ledger_search">
                 <input class="ledger_search" id="query-input" placeholder="Search" size="30" :value="query"
@@ -59,15 +65,8 @@
                 Clear filter
               </div>
             </div>
-          </div>
-          <div class="error" v-if="error">
-            {% raw %}
-            <p>
-              <span class="fa fa-warning"></span> {{error}}
-            </p>
-            {% endraw %}
-          </div>
-          <template v-if="loaded">
+
+
             {% raw %}
 
             <div class="txn_table_main" v-if="txns.length">
@@ -77,15 +76,21 @@
                 <div class="txn_table_heading">Type</div>
                 <div class="txn_table_heading">Transaction ID</div>
               </div>
-              <div class="txn_table_entries" v-for="entry in txns" @click="detailClick(entry)" :class="(detailSelected && detailSelected.index === entry.index ? 'active' : '')">
+              <div class="txn_table_entries" v-for="entry in txns" @click="detailClick(entry)"
+                :class="(detailSelected && detailSelected.index === entry.index ? 'active' : '')">
                 <div class="txn_table_entry">{{entry.txnMetadata.seqNo}}</div>
                 <div class="txn_table_entry">{{entry.txnMetadata.txnTime | format_time}}</div>
                 <div class="txn_table_entry">{{txnType(entry.txn.type)}}</div>
                 <div class="txn_table_entry">{{entry.txnMetadata.txnId}}</div>
               </div>
             </div>
+            <!-- <div class="error" v-else>
+              <p>
+                <span class="fa fa-warning"></span>No transactions found
+              </p>
+            </div> -->
 
-            <div class="ledger_nav_bottom" v-if="nav.loaded">
+            <div class="ledger_nav_bottom">
               <div class="ledger_count">
                 {{nav.total || 0}} record(s)
               </div>
@@ -98,219 +103,212 @@
                 </ul>
               </div>
             </div>
+
             {% endraw %}
           </template>
         </div>
-        <template v-if="loaded">
-          {% raw %}
-          <div class="txn_table_right">
-            <div v-if="detailSelected">
-              <h1 class="detail_heading">
-                Transaction Details
-              </h1>
-              <div class="detail_close" @click="detailClick(detailSelected = null)"></div>
-              <div class="detail_txn_no"><span>{{detailSelected.txnMetadata.seqNo}}</span></div>
-              <div>
-                <template v-if="detailSelected.txnMetadata.txnId">
-                  <div class="detail_txn_section">
-                    Message Wrapper
-                  </div>
-                  <div v-if="detailSelected.txnMetadata.txnId">
-                    <label>Transaction ID</label> <span>{{detailSelected.txnMetadata.txnId}}</span>
-                  </div>
-                  <div v-if="detailSelected.txnMetadata.txnTime">
-                    <label>Transaction time</label> <span>{{detailSelected.txnMetadata.txnTime |
-                      format_time}}
-                      ({{detailSelected.txnMetadata.txnTime}})</span>
-                  </div>
-                  <div v-if="detailSelected.reqSignature && detailSelected.reqSignature.values">
-                    <label>Signed by</label> <span>{{detailSelected.reqSignature.values[0].from}}</span>
-                  </div>
-                </template>
-                <template v-if="detailSelected.txn && detailSelected.txn.metadata && detailSelected.txn.metadata.from">
-                  <div class="detail_txn_section">
-                    Metadata
-                  </div>
-                  <div v-if="detailSelected.txn.metadata.from">
-                    <label>From nym</label> <span>{{detailSelected.txn.metadata.from}}</span>
-                  </div>
-                  <div v-if="detailSelected.txn.metadata.reqId">
-                    <label>Request ID</label> <span>{{detailSelected.txn.metadata.reqId}}</span>
-                  </div>
-                  <div v-if="detailSelected.txn.metadata.digest">
-                    <label>Digest</label> <span>{{detailSelected.txn.metadata.digest}}</span>
-                  </div>
-                </template>
+        <div class="txn_table_right">
+          <div v-if="detailSelected">
+            {% raw %}
+            <h1 class="detail_heading">
+              Transaction Details
+            </h1>
+            <div class="detail_close" @click="detailClick(detailSelected = null)"></div>
+            <div class="detail_txn_no"><span>{{detailSelected.txnMetadata.seqNo}}</span></div>
+            <div>
+              <template v-if="detailSelected.txnMetadata.txnId">
                 <div class="detail_txn_section">
-                  Transaction
+                  Message Wrapper
+                </div>
+                <div v-if="detailSelected.txnMetadata.txnId">
+                  <label>Transaction ID</label> <span>{{detailSelected.txnMetadata.txnId}}</span>
+                </div>
+                <div v-if="detailSelected.txnMetadata.txnTime">
+                  <label>Transaction time</label> <span>{{detailSelected.txnMetadata.txnTime |
+                    format_time}}
+                    ({{detailSelected.txnMetadata.txnTime}})</span>
+                </div>
+                <div v-if="detailSelected.reqSignature && detailSelected.reqSignature.values">
+                  <label>Signed by</label> <span>{{detailSelected.reqSignature.values[0].from}}</span>
+                </div>
+              </template>
+              <template v-if="detailSelected.txn && detailSelected.txn.metadata && detailSelected.txn.metadata.from">
+                <div class="detail_txn_section">
+                  Metadata
+                </div>
+                <div v-if="detailSelected.txn.metadata.from">
+                  <label>From nym</label> <span>{{detailSelected.txn.metadata.from}}</span>
+                </div>
+                <div v-if="detailSelected.txn.metadata.reqId">
+                  <label>Request ID</label> <span>{{detailSelected.txn.metadata.reqId}}</span>
+                </div>
+                <div v-if="detailSelected.txn.metadata.digest">
+                  <label>Digest</label> <span>{{detailSelected.txn.metadata.digest}}</span>
+                </div>
+              </template>
+              <div class="detail_txn_section">
+                Transaction
+              </div>
+              <div>
+                <label>Type</label> <span>{{txnType(detailSelected.txn.type)}}</span>
+              </div>
+              <template v-if="detailSelected.txn.type == '0'">
+                <div v-if="detailSelected.txn.data.data.alias">
+                  <label>Alias</label> <span>{{detailSelected.txn.data.data.alias}}</span>
                 </div>
                 <div>
-                  <label>Type</label> <span>{{txnType(detailSelected.txn.type)}}</span>
+                  <label>Nym</label> <span>{{detailSelected.txn.data.dest}}</span>
                 </div>
-                <template v-if="detailSelected.txn.type == '0'">
-                  <div v-if="detailSelected.txn.data.data.alias">
-                    <label>Alias</label> <span>{{detailSelected.txn.data.data.alias}}</span>
-                  </div>
-                  <div>
-                    <label>Nym</label> <span>{{detailSelected.txn.data.dest}}</span>
-                  </div>
-                  <div v-if="detailSelected.txn.data.data.client_ip">
-                    <label>Client IP</label> <span>{{detailSelected.txn.data.data.client_ip}}</span>
-                  </div>
-                  <div v-if="detailSelected.txn.data.data.client_port">
-                    <label>Client port</label> <span>{{detailSelected.txn.data.data.client_port}}</span>
-                  </div>
-                  <div v-if="detailSelected.txn.data.data.node_ip">
-                    <label>Node IP</label> <span>{{detailSelected.txn.data.data.node_ip}}</span>
-                  </div>
-                  <div v-if="detailSelected.txn.data.data.node_port">
-                    <label>Node port</label> <span>{{detailSelected.txn.data.data.node_port}}</span>
-                  </div>
-                  <div v-if="detailSelected.txn.data.data.services">
-                    <label>Services</label> <span>{{detailSelected.txn.data.data.services | concat}}</span>
-                  </div>
-                </template>
-                <template v-if="detailSelected.txn.type == '1'">
-                  <div v-if="detailSelected.txn.data.alias">
-                    <label>Alias</label> <span>{{detailSelected.txn.data.alias}}</span>
-                  </div>
-                  <div>
-                    <label>Nym</label> <span>{{detailSelected.txn.data.dest}}</span>
-                  </div>
-                  <div>
-                    <label>Role</label> <span>{{roleType(detailSelected.txn.data.role)}}</span>
-                  </div>
-                  <div>
-                    <label>Verkey</label> <span>{{detailSelected.txn.data.verkey}}</span>
-                  </div>
-                </template>
-                <template v-if="detailSelected.txn.type == '4'">
-                  <div v-if="detailSelected.txn.data.version">
-                    <label>Version</label> <span>{{detailSelected.txn.data.version}}</span>
-                  </div>
-                  <div v-if="detailSelected.txn.data.text">
-                    <label>AML</label> <span>{{detailSelected.txn.data.text}}</span>
-                  </div>
-                </template>
-                <template v-if="detailSelected.txn.type == '5'">
-                  <div v-if="detailSelected.txn.data.version">
-                    <label>Version</label> <span>{{detailSelected.txn.data.version}}</span>
-                  </div>
-                  <div v-if="detailSelected.txn.data.amlContext">
-                    <label>Context</label> <span>{{detailSelected.txn.data.amlContext}}</span>
-                  </div>
-                  <div>
-                    <label>AML</label>
-                    <dl>
-                      <template v-for="(amlVal, amlType) in detailSelected.txn.data.aml">
-                        <dt>{{amlType}}</dt>
-                        <dd>{{amlVal}}</dd>
-                      </template>
-                    </dl>
-                  </div>
-                </template>
-                <template v-if="detailSelected.txn.type == '100'">
-                  <div>
-                    <label>Nym</label> <span>{{detailSelected.txn.data.dest}}</span>
-                  </div>
-                  <div>
-                    <label>Attribute data</label> <span>{{detailSelected.txn.data.raw}}</span>
-                  </div>
-                </template>
-                <template v-if="detailSelected.txn.type == '101'">
-                  <div>
-                    <label>Schema name</label> <span>{{detailSelected.txn.data.data.name}}</span>
-                  </div>
-                  <div>
-                    <label>Schema version</label> <span>{{detailSelected.txn.data.data.version}}</span>
-                  </div>
-                  <div v-if="detailSelected.txn.data.data.attr_names">
-                    <label>Schema attributes</label>
-                    <ul>
-                      <li v-for="attr in detailSelected.txn.data.data.attr_names">
-                        {{attr}}
-                      </li>
-                    </ul>
-                  </div>
-                </template>
-                <template v-if="detailSelected.txn.type == '102'">
-                  <div>
-                    <label>Reference</label> <span>{{detailSelected.txn.data.ref}}</span>
-                  </div>
-                  <div>
-                    <label>Signature type</label> <span>{{detailSelected.txn.data.signature_type}}</span>
-                  </div>
-                  <div>
-                    <label>Tag</label> <span>{{detailSelected.txn.data.tag}}</span>
-                  </div>
-                  <div v-if="detailSelected.txn.data.data.primary">
-                    <label>Attributes</label>
-                    <ul>
-                      <li v-for="(hash, attr) in detailSelected.txn.data.data.primary.r">
-                        {{attr}}
-                      </li>
-                    </ul>
-                </template>
-                <template v-if="detailSelected.txn.type == '113'">
-                  <div>
-                    <label>Revocation registry type</label>
-                    <span>{{detailSelected.txn.data.revocDefType}}</span>
-                  </div>
-                  <div>
-                    <label>Credential definition ID</label>
-                    <span>{{detailSelected.txn.data.credDefId}}</span>
-                  </div>
-                  <div>
-                    <label>Tag</label> <span>{{detailSelected.txn.data.tag}}</span>
-                  </div>
-                  <div>
-                    <label>Issuance type</label> <span>{{detailSelected.txn.data.value.issuanceType}}</span>
-                  </div>
-                  <div>
-                    <label>Maximum credential count</label>
-                    <span>{{detailSelected.txn.data.value.maxCredNum}}</span>
-                  </div>
-                  <div>
-                    <label>Tails file hash</label> <span>{{detailSelected.txn.data.value.tailsHash}}</span>
-                  </div>
-                  <div>
-                    <label>Tails file location</label>
-                    <span>{{detailSelected.txn.data.value.tailsLocation}}</span>
-                  </div>
-                  <div>
-                    <label>Accumulator key</label>
-                    <span>{{detailSelected.txn.data.value.publicKeys.accumKey.z}}</span>
-                  </div>
-                </template>
-                <template v-if="detailSelected.txn.type == '114'">
-                  <div>
-                    <label>Revocation registry type</label>
-                    <span>{{detailSelected.txn.data.revocDefType}}</span>
-                  </div>
-                  <div>
-                    <label>Revocation registry ID</label>
-                    <span>{{detailSelected.txn.data.revocRegDefId}}</span>
-                  </div>
-                  <div>
-                    <label>Accumulator value</label> <span>{{detailSelected.txn.data.value.accum}}</span>
-                  </div>
-                </template>
-                <div class="detail_txn_section" :class="'arrow-' + (detailSelected.expanded ? 'up' : 'down')"
-                  @click.prevent="toggleData(detailSelected.index)">
-                  Raw Data
+                <div v-if="detailSelected.txn.data.data.client_ip">
+                  <label>Client IP</label> <span>{{detailSelected.txn.data.data.client_ip}}</span>
                 </div>
-                <textarea readonly spellcheck="false" v-if="detailSelected.expanded">{{detailSelected.json}}</textarea>
+                <div v-if="detailSelected.txn.data.data.client_port">
+                  <label>Client port</label> <span>{{detailSelected.txn.data.data.client_port}}</span>
+                </div>
+                <div v-if="detailSelected.txn.data.data.node_ip">
+                  <label>Node IP</label> <span>{{detailSelected.txn.data.data.node_ip}}</span>
+                </div>
+                <div v-if="detailSelected.txn.data.data.node_port">
+                  <label>Node port</label> <span>{{detailSelected.txn.data.data.node_port}}</span>
+                </div>
+                <div v-if="detailSelected.txn.data.data.services">
+                  <label>Services</label> <span>{{detailSelected.txn.data.data.services | concat}}</span>
+                </div>
+              </template>
+              <template v-if="detailSelected.txn.type == '1'">
+                <div v-if="detailSelected.txn.data.alias">
+                  <label>Alias</label> <span>{{detailSelected.txn.data.alias}}</span>
+                </div>
+                <div>
+                  <label>Nym</label> <span>{{detailSelected.txn.data.dest}}</span>
+                </div>
+                <div>
+                  <label>Role</label> <span>{{roleType(detailSelected.txn.data.role)}}</span>
+                </div>
+                <div>
+                  <label>Verkey</label> <span>{{detailSelected.txn.data.verkey}}</span>
+                </div>
+              </template>
+              <template v-if="detailSelected.txn.type == '4'">
+                <div v-if="detailSelected.txn.data.version">
+                  <label>Version</label> <span>{{detailSelected.txn.data.version}}</span>
+                </div>
+                <div v-if="detailSelected.txn.data.text">
+                  <label>AML</label> <span>{{detailSelected.txn.data.text}}</span>
+                </div>
+              </template>
+              <template v-if="detailSelected.txn.type == '5'">
+                <div v-if="detailSelected.txn.data.version">
+                  <label>Version</label> <span>{{detailSelected.txn.data.version}}</span>
+                </div>
+                <div v-if="detailSelected.txn.data.amlContext">
+                  <label>Context</label> <span>{{detailSelected.txn.data.amlContext}}</span>
+                </div>
+                <div>
+                  <label>AML</label>
+                  <dl>
+                    <template v-for="(amlVal, amlType) in detailSelected.txn.data.aml">
+                      <dt>{{amlType}}</dt>
+                      <dd>{{amlVal}}</dd>
+                    </template>
+                  </dl>
+                </div>
+              </template>
+              <template v-if="detailSelected.txn.type == '100'">
+                <div>
+                  <label>Nym</label> <span>{{detailSelected.txn.data.dest}}</span>
+                </div>
+                <div>
+                  <label>Attribute data</label> <span>{{detailSelected.txn.data.raw}}</span>
+                </div>
+              </template>
+              <template v-if="detailSelected.txn.type == '101'">
+                <div>
+                  <label>Schema name</label> <span>{{detailSelected.txn.data.data.name}}</span>
+                </div>
+                <div>
+                  <label>Schema version</label> <span>{{detailSelected.txn.data.data.version}}</span>
+                </div>
+                <div v-if="detailSelected.txn.data.data.attr_names">
+                  <label>Schema attributes</label>
+                  <ul>
+                    <li v-for="attr in detailSelected.txn.data.data.attr_names">
+                      {{attr}}
+                    </li>
+                  </ul>
+                </div>
+              </template>
+              <template v-if="detailSelected.txn.type == '102'">
+                <div>
+                  <label>Reference</label> <span>{{detailSelected.txn.data.ref}}</span>
+                </div>
+                <div>
+                  <label>Signature type</label> <span>{{detailSelected.txn.data.signature_type}}</span>
+                </div>
+                <div>
+                  <label>Tag</label> <span>{{detailSelected.txn.data.tag}}</span>
+                </div>
+                <div v-if="detailSelected.txn.data.data.primary">
+                  <label>Attributes</label>
+                  <ul>
+                    <li v-for="(hash, attr) in detailSelected.txn.data.data.primary.r">
+                      {{attr}}
+                    </li>
+                  </ul>
+              </template>
+              <template v-if="detailSelected.txn.type == '113'">
+                <div>
+                  <label>Revocation registry type</label>
+                  <span>{{detailSelected.txn.data.revocDefType}}</span>
+                </div>
+                <div>
+                  <label>Credential definition ID</label>
+                  <span>{{detailSelected.txn.data.credDefId}}</span>
+                </div>
+                <div>
+                  <label>Tag</label> <span>{{detailSelected.txn.data.tag}}</span>
+                </div>
+                <div>
+                  <label>Issuance type</label> <span>{{detailSelected.txn.data.value.issuanceType}}</span>
+                </div>
+                <div>
+                  <label>Maximum credential count</label>
+                  <span>{{detailSelected.txn.data.value.maxCredNum}}</span>
+                </div>
+                <div>
+                  <label>Tails file hash</label> <span>{{detailSelected.txn.data.value.tailsHash}}</span>
+                </div>
+                <div>
+                  <label>Tails file location</label>
+                  <span>{{detailSelected.txn.data.value.tailsLocation}}</span>
+                </div>
+                <div>
+                  <label>Accumulator key</label>
+                  <span>{{detailSelected.txn.data.value.publicKeys.accumKey.z}}</span>
+                </div>
+              </template>
+              <template v-if="detailSelected.txn.type == '114'">
+                <div>
+                  <label>Revocation registry type</label>
+                  <span>{{detailSelected.txn.data.revocDefType}}</span>
+                </div>
+                <div>
+                  <label>Revocation registry ID</label>
+                  <span>{{detailSelected.txn.data.revocRegDefId}}</span>
+                </div>
+                <div>
+                  <label>Accumulator value</label> <span>{{detailSelected.txn.data.value.accum}}</span>
+                </div>
+              </template>
+              <div class="detail_txn_section" :class="'arrow-' + (detailSelected.expanded ? 'up' : 'down')"
+                @click.prevent="toggleData(detailSelected.index)">
+                Raw Data
               </div>
+              <textarea readonly spellcheck="false" v-if="detailSelected.expanded">{{detailSelected.json}}</textarea>
             </div>
+            {% endraw %}
           </div>
-
-          <div class="error" v-else>
-            <p>
-              <span class="fa fa-warning"></span> No transactions
-            </p>
-          </div>
-          {% endraw %}
-        </template>
+        </div>
       </div>
     </div>
   </main>
