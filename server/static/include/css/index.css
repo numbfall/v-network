@@ -879,6 +879,9 @@ h2 .fa {
   transition: background-color 0.5s;
   cursor: pointer;
 }
+.ledger_wrapper .ledger_main .txn_table_main .txn_table_entries.active {
+  background-color: rgba(0, 0, 0, 0.04);
+}
 .ledger_wrapper .ledger_main .txn_table_main .txn_table_entries:hover {
   background-color: rgba(0, 0, 0, 0.04);
 }

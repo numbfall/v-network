@@ -77,7 +77,7 @@
                 <div class="txn_table_heading">Type</div>
                 <div class="txn_table_heading">Transaction ID</div>
               </div>
-              <div class="txn_table_entries" v-for="entry in txns" @click="detailClick(entry)">
+              <div class="txn_table_entries" v-for="entry in txns" @click="detailClick(entry)" :class="(detailSelected && detailSelected.index === entry.index ? 'active' : '')">
                 <div class="txn_table_entry">{{entry.txnMetadata.seqNo}}</div>
                 <div class="txn_table_entry">{{entry.txnMetadata.txnTime | format_time}}</div>
                 <div class="txn_table_entry">{{txnType(entry.txn.type)}}</div>

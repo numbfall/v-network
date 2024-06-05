@@ -970,6 +970,10 @@ h2 {
 				transition: background-color 0.5s;
 				cursor: pointer;
 
+				&.active {
+					background-color: rgba(0, 0, 0, 0.04);
+				}
+
 				&:hover {
 					background-color: rgba(0, 0, 0, 0.04);
 				}
