@@ -843,6 +843,7 @@ h2 .fa {
   color: #fff;
   font-weight: 600;
   font-size: 90%;
+  cursor: pointer;
 }
 .ledger_wrapper .ledger_main .ledger_nav_top .ledger_search {
   display: flex;
