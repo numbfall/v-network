@@ -706,6 +706,106 @@ h2 .fa {
   max-width: 500px;
 }
 
+.ledger_wrapper {
+  display: flex;
+}
+.ledger_wrapper .ledger_main {
+  flex: 0 0 60%;
+}
+.ledger_wrapper .ledger_main .ledger-heading {
+  font-weight: 600;
+  font-size: 1.6rem;
+}
+.ledger_wrapper .ledger_main .ledger-heading .ledger_name {
+  font-size: 1rem;
+  margin-left: 1rem;
+  color: #1c6da6;
+}
+.ledger_wrapper .ledger_main .ledger_nav_top {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  padding: 1rem 0.2rem;
+  gap: 2rem;
+}
+.ledger_wrapper .ledger_main .ledger_nav_top input,
+.ledger_wrapper .ledger_main .ledger_nav_top select {
+  border: 1px solid #888;
+  border-radius: 0.2rem;
+  padding: 0.8rem 1.2rem;
+  width: 200px;
+}
+.ledger_wrapper .ledger_main .ledger_nav_top select {
+  background: url("data:image/svg+xml,<svg height='10px' width='10px' viewBox='0 0 16 16' fill='%23000000' xmlns='http://www.w3.org/2000/svg'><path d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/></svg>") no-repeat;
+  background-position: calc(100% - 0.75rem) center !important;
+  -moz-appearance: none !important;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  padding-right: 2rem !important;
+}
+.ledger_wrapper .ledger_main .ledger_nav_top .clear_filter {
+  border: 1px solid #888;
+  border-radius: 0.2rem;
+  padding: 0 1.2rem;
+  display: flex;
+  align-items: center;
+  background-color: #b55;
+  color: #fff;
+}
+.ledger_wrapper .ledger_main .ledger_nav_top .ledger_search {
+  display: flex;
+  gap: 1rem;
+}
+.ledger_wrapper .ledger_main .ledger_nav_bottom {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0.4rem 1.4rem;
+  align-items: center;
+}
+.ledger_wrapper .ledger_main .txn_table_main {
+  display: table;
+  font-size: 90%;
+}
+.ledger_wrapper .ledger_main .txn_table_main .txn_table_header {
+  display: table-header-group;
+  background-color: rgba(0, 0, 0, 0.05);
+  color: #333;
+}
+.ledger_wrapper .ledger_main .txn_table_main .txn_table_header .txn_table_heading {
+  display: table-cell;
+  font-weight: 600;
+  padding: 0.4rem 1.2rem;
+  text-wrap: nowrap;
+}
+.ledger_wrapper .ledger_main .txn_table_main .txn_table_entries {
+  display: table-row;
+  box-shadow: 0 1px 0px 0px rgba(0, 0, 0, 0.08);
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+.ledger_wrapper .ledger_main .txn_table_main .txn_table_entries:hover {
+  background-color: rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+}
+.ledger_wrapper .ledger_main .txn_table_main .txn_table_entries .txn_table_entry {
+  display: table-cell;
+  padding: 1.2rem;
+  text-wrap: nowrap;
+}
+.ledger_wrapper .ledger_main .txn_table_main .txn_table_entries .txn_table_entry:last-child {
+  text-overflow: ellipsis;
+}
+.ledger_wrapper .txn_table_right {
+  padding: 1.4rem;
+  overflow-y: scroll;
+  border-left: 1px solid #89a;
+  max-height: 100vh;
+  text-wrap: wrap;
+}
+.ledger_wrapper .txn_table_right div {
+  padding: 0.4rem 1rem;
+}
+
 @media screen and (max-width: 900px) {
   .row-outer {
     display: block;

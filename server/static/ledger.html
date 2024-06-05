@@ -6,9 +6,9 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ LEDGER_INSTANCE_NAME }} Blockchain Ledger</title>
-  <link href="/include/css/index.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="/include/css/index.css?v=1" rel="stylesheet">
+  <!-- <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"> -->
+  <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"> -->
   <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
   <script src="/include/js/common.js"></script>
   <!-- <script src="https://cdn.tailwindcss.com"></script> -->
@@ -21,300 +21,290 @@
 <body>
 
   {% include 'header.html' %}
-  
+
   <main>
-    <div class="row-outer">
-      <div class="col-main">
-        <a href="/" class="back-link"><span class="fa fa-chevron-left"></span> Back to Status</a>
-        <div id="vue-ledger">
-          <div class="panel panel-default panel-ledger-data">
-            <div class="panel-heading">
-              <h2>
-                Ledger Transactions
-                <span class="small ledger-loading" v-if="loading">
-                  <span class="fa fa-circle-o-notch fa-spin fa-fw"></span> Loading ...
-                </span>
-              </h2>
+    <div id="vue-ledger">
+      <div class="ledger_wrapper">
+        <div class="ledger_main">
+          <h1 class="ledger-heading">
+            Ledger Transactions<span class="ledger_name">({% raw %}{{ ledger }}{% endraw %})</span>
+          </h1>
+          <div v-if="loading">
+            <div class="lds-ring">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
             </div>
-            <div class="panel-body ledger-txns" style="display: none" v-show="true">
-              <div class="ledger-nav" v-if="nav.ident">
-                <a href="#" @click.prevent="showEntry(null)"><span class="fa fa-chevron-left"></span> Back to list</a>
-              </div>
-              <div class="ledger-nav">
-                <div class="nav-left">
-                  <div class="ledger">
-                    {% raw %}
-                    <select class="tool-input" id="ledger-select" v-model="ledger" @change="updateLedger()">
-                      <option value="">(Select)</option>
-                      <option v-for="opt in ledgerOptions" :value="opt.value">{{opt.label}}</option>
-                    </select>
-                    <label class="count nav-label" v-if="nav.loaded">
-                      {{nav.total || 0}} record(s)
-                    </label>
-                    {% endraw %}
-                  </div>
-                  <ul class="pagination" v-if="nav.loaded">
-                    <li v-for="p in nav.pages" :class="'page-item' + (p.active ? ' active' : '')">
-                      {% raw %}
-                      <a class="page-link" href="#" @click.prevent="gotoPage(p.index)" v-if="p.link">{{p.index}}</a>
-                      <span class="page-text" v-else>{{p.text}}</span>
-                      {% endraw %}
-                    </li>
-                  </ul>
-                </div>
-                <div class="nav-right">
-                  <div class="filter">
-                    <label class="nav-label">Type: </label>
-                    <select class="tool-input" id="txn-type-select" v-model="txn_type" @change="updateLedger()">
-                      {% raw %}
-                      <option value="">(Select)</option>
-                      <option v-for="opt in txnTypeOptions" :value="opt.value">{{opt.label}}</option>
-                      {% endraw %}
-                    </select>
-                    <br>
-                    <label class="nav-label">Filter: </label>
-                    <input class="tool-input" id="query-input" placeholder="" size="30" :value="query"
-                      @keyup.enter="updateQuery($event.target.value)" @focus="$event.target.select()">
-                    <div class="clear-filter" v-if="haveFilter" @click.prevent="clearFilter()">
-                      <span class="fa fa-times-circle"></span> Clear filter
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="error" v-if="error">
-                {% raw %}
-                <p>
-                  <span class="fa fa-warning"></span> {{error}}
-                </p>
-                {% endraw %}
-              </div>
-              <template v-if="loaded">
-                {% raw %}
+            <div>Loading ledger ...</div>
+          </div>
 
-<!-- TRY GRIDS -->
+          <div class="ledger-txns" style="display: none" v-show="true">
 
-<div class="grid_container">
-  <div class="grid_main" styles="grid-area: main"><table><tr><td>HI</td></tr></table></div>
-  <div class="grid_right" styles="grid-area: right"></div>
-</div>
-
-<!-- END GRIDS -->
-                <table class="ledger-data" v-if="txns.length">
-                  <tbody>
-                    <tr class="ledger-row" v-for="entry in txns">
-                      <td class="ledger-index"><span class="number">{{entry.txnMetadata.seqNo}}</span></td>
-                      <td class="ledger-entry">
-                        <template v-if="entry.txnMetadata.txnId">
-                          <div class="ledger-entry-title">
-                            Message Wrapper
-                          </div>
-                          <div v-if="entry.txnMetadata.txnId" class="line misc">
-                            <label>Transaction ID:</label> <span class="ident">{{entry.txnMetadata.txnId}}</span>
-                          </div>
-                          <div v-if="entry.txnMetadata.txnTime" class="line misc">
-                            <label>Transaction time:</label> <span 
-                            class="ident">{{entry.txnMetadata.txnTime | format_time}}
-                              ({{entry.txnMetadata.txnTime}})</span>
-                          </div>
-                          <div v-if="entry.reqSignature && entry.reqSignature.values" class="line misc">
-                            <label>Signed by:</label> <span class="ident">{{entry.reqSignature.values[0].from}}</span>
-                          </div>
-                        </template>
-                        <template v-if="entry.txn && entry.txn.metadata && entry.txn.metadata.from">
-                          <div class="ledger-entry-title">
-                            Metadata
-                          </div>
-                          <div v-if="entry.txn.metadata.from" class="line misc">
-                            <label>From nym:</label> <span class="ident">{{entry.txn.metadata.from}}</span>
-                          </div>
-                          <div v-if="entry.txn.metadata.reqId" class="line misc">
-                            <label>Request ID:</label> <span class="ident">{{entry.txn.metadata.reqId}}</span>
-                          </div>
-                          <div v-if="entry.txn.metadata.digest" class="line misc">
-                            <label>Digest:</label> <span class="ident">{{entry.txn.metadata.digest}}</span>
-                          </div>
-                        </template>
-                        <div class="ledger-entry-title">
-                          Transaction
-                        </div>
-                        <div class="line misc">
-                          <label>Type:</label> <span class="ident">{{txnType(entry.txn.type)}}</span>
-                        </div>
-                        <template v-if="entry.txn.type == '0'">
-                          <div class="line misc" v-if="entry.txn.data.data.alias">
-                            <label>Alias:</label> <span class="ident">{{entry.txn.data.data.alias}}</span>
-                          </div>
-                          <div class="line misc">
-                            <label>Nym:</label> <span class="ident">{{entry.txn.data.dest}}</span>
-                          </div>
-                          <div class="line misc" v-if="entry.txn.data.data.client_ip">
-                            <label>Client IP:</label> <span class="ident">{{entry.txn.data.data.client_ip}}</span>
-                          </div>
-                          <div class="line misc" v-if="entry.txn.data.data.client_port">
-                            <label>Client port:</label> <span class="ident">{{entry.txn.data.data.client_port}}</span>
-                          </div>
-                          <div class="line misc" v-if="entry.txn.data.data.node_ip">
-                            <label>Node IP:</label> <span class="ident">{{entry.txn.data.data.node_ip}}</span>
-                          </div>
-                          <div class="line misc" v-if="entry.txn.data.data.node_port">
-                            <label>Node port:</label> <span class="ident">{{entry.txn.data.data.node_port}}</span>
-                          </div>
-                          <div class="line misc" v-if="entry.txn.data.data.services">
-                            <label>Services:</label> <span 
-                            class="ident">{{entry.txn.data.data.services | concat}}</span>
-                          </div>
-                        </template>
-                        <template v-if="entry.txn.type == '1'">
-                          <div class="line misc" v-if="entry.txn.data.alias">
-                            <label>Alias:</label> <span class="ident">{{entry.txn.data.alias}}</span>
-                          </div>
-                          <div class="line misc">
-                            <label>Nym:</label> <span class="ident">{{entry.txn.data.dest}}</span>
-                          </div>
-                          <div class="line misc">
-                            <label>Role:</label> <span class="ident">{{roleType(entry.txn.data.role)}}</span>
-                          </div>
-                          <div class="line misc">
-                            <label>Verkey:</label> <span class="ident">{{entry.txn.data.verkey}}</span>
-                          </div>
-                        </template>
-                        <template v-if="entry.txn.type == '4'">
-                          <div class="line misc" v-if="entry.txn.data.version">
-                            <label>Version:</label> <span class="ident">{{entry.txn.data.version}}</span>
-                          </div>
-                          <div class="block misc" v-if="entry.txn.data.text">
-                            <label>AML:</label> <span class="ident">{{entry.txn.data.text}}</span>
-                          </div>
-                        </template>
-                        <template v-if="entry.txn.type == '5'">
-                          <div class="line misc" v-if="entry.txn.data.version">
-                            <label>Version:</label> <span class="ident">{{entry.txn.data.version}}</span>
-                          </div>
-                          <div class="line misc" v-if="entry.txn.data.amlContext">
-                            <label>Context:</label> <span class="ident">{{entry.txn.data.amlContext}}</span>
-                          </div>
-                          <div class="block misc">
-                            <label>AML:</label>
-                            <dl>
-                              <template v-for="(amlVal, amlType) in entry.txn.data.aml">
-                                <dt class="ident">{{amlType}}</dt>
-                                <dd>{{amlVal}}</dd>
-                              </template>
-                            </dl>
-                          </div>
-                        </template>
-                        <template v-if="entry.txn.type == '100'">
-                          <div class="line misc">
-                            <label>Nym:</label> <span class="ident">{{entry.txn.data.dest}}</span>
-                          </div>
-                          <div class="line misc">
-                            <label>Attribute data:</label> <span class="ident">{{entry.txn.data.raw}}</span>
-                          </div>
-                        </template>
-                        <template v-if="entry.txn.type == '101'">
-                          <div class="line misc">
-                            <label>Schema name:</label> <span class="ident">{{entry.txn.data.data.name}}</span>
-                          </div>
-                          <div class="line misc">
-                            <label>Schema version:</label> <span class="ident">{{entry.txn.data.data.version}}</span>
-                          </div>
-                          <div class="line misc" v-if="entry.txn.data.data.attr_names">
-                            <label>Schema attributes:</label>
-                            <ul>
-                              <li v-for="attr in entry.txn.data.data.attr_names" class="ident">
-                                {{attr}}
-                              </li>
-                            </ul>
-                          </div>
-                        </template>
-                        <template v-if="entry.txn.type == '102'">
-                          <div class="line misc">
-                            <label>Reference:</label> <span class="ident">{{entry.txn.data.ref}}</span>
-                          </div>
-                          <div class="line misc">
-                            <label>Signature type:</label> <span class="ident">{{entry.txn.data.signature_type}}</span>
-                          </div>
-                          <div class="line misc">
-                            <label>Tag:</label> <span class="ident">{{entry.txn.data.tag}}</span>
-                          </div>
-                          <div class="line misc" v-if="entry.txn.data.data.primary">
-                            <label>Attributes:</label>
-                            <ul>
-                              <li v-for="(hash, attr) in entry.txn.data.data.primary.r" class="ident">
-                                {{attr}}
-                              </li>
-                            </ul>
-                        </template>
-                        <template v-if="entry.txn.type == '113'">
-                          <div class="line misc">
-                            <label>Revocation registry type:</label> <span
-                              class="ident">{{entry.txn.data.revocDefType}}</span>
-                          </div>
-                          <div class="line misc">
-                            <label>Credential definition ID:</label> <span
-                              class="ident">{{entry.txn.data.credDefId}}</span>
-                          </div>
-                          <div class="line misc">
-                            <label>Tag:</label> <span class="ident">{{entry.txn.data.tag}}</span>
-                          </div>
-                          <div class="line misc">
-                            <label>Issuance type:</label> <span
-                              class="ident">{{entry.txn.data.value.issuanceType}}</span>
-                          </div>
-                          <div class="line misc">
-                            <label>Maximum credential count:</label> <span
-                              class="ident">{{entry.txn.data.value.maxCredNum}}</span>
-                          </div>
-                          <div class="line misc">
-                            <label>Tails file hash:</label> <span
-                              class="ident">{{entry.txn.data.value.tailsHash}}</span>
-                          </div>
-                          <div class="line misc">
-                            <label>Tails file location:</label> <span
-                              class="ident">{{entry.txn.data.value.tailsLocation}}</span>
-                          </div>
-                          <div class="block misc">
-                            <label>Accumulator key:</label>
-                            <span class="ident">{{entry.txn.data.value.publicKeys.accumKey.z}}</span>
-                          </div>
-                        </template>
-                        <template v-if="entry.txn.type == '114'">
-                          <div class="line misc">
-                            <label>Revocation registry type:</label> <span
-                              class="ident">{{entry.txn.data.revocDefType}}</span>
-                          </div>
-                          <div class="block misc">
-                            <label>Revocation registry ID:</label> <span
-                              class="ident">{{entry.txn.data.revocRegDefId}}</span>
-                          </div>
-                          <div class="block misc">
-                            <label>Accumulator value:</label> <span class="ident">{{entry.txn.data.value.accum}}</span>
-                          </div>
-                        </template>
-                        <!-- <div class="ledger-entry-title active" @click.prevent="toggleData(entry.index)">
-                          Raw Data <span :class="'fa fa-chevron-' + (entry.expanded ? 'up' : 'down')"></span>
-                        </div>
-                        <div class="raw-data" v-if="entry.expanded">{{entry.json}}</div> -->
-                        <div class="block misc" @click="clickidyClick(entry)">
-<button>Raw Data</button>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                <div class="error" v-else>
-                  <p>
-                    <span class="fa fa-warning"></span> No transactions
-                  </p>
-                </div>
-                <div v-if="detailSelected">
-                  {{ detailSelected.json }}
-                </div>
-                {% endraw %}
-              </template>
+            <div class="ledger_nav_top">
+              <div class="ledger_search">
+                <input class="ledger_search" id="query-input" placeholder="Search" size="30" :value="query"
+                  @keyup.enter="updateQuery($event.target.value)" @focus="$event.target.select()">
+              </div>
+              <div class="ledger_filter">
+                <select class="ledger_type" id="txn-type-select" v-model="txn_type" @change="updateLedger()">
+                  {% raw %}
+                  <option value="">Type</option>
+                  <option v-for="opt in txnTypeOptions" :value="opt.value">{{opt.label}}</option>
+                  {% endraw %}
+                </select>
+              </div>
+              <div class="clear_filter" v-if="haveFilter" @click.prevent="clearFilter()">
+                Clear filter
+              </div>
             </div>
           </div>
+          <div class="error" v-if="error">
+            {% raw %}
+            <p>
+              <span class="fa fa-warning"></span> {{error}}
+            </p>
+            {% endraw %}
+          </div>
+          <template v-if="loaded">
+            {% raw %}
+
+              <div class="txn_table_main" v-if="txns.length">
+                <div class="txn_table_header">
+                  <div class="txn_table_heading">Txn No</div>
+                  <div class="txn_table_heading">Time</div>
+                  <div class="txn_table_heading">Type</div>
+                  <div class="txn_table_heading">Transaction ID</div>
+                </div>
+                <div class="txn_table_entries" v-for="entry in txns" @click="clickidyClick(entry)">
+                  <div class="txn_table_entry">{{entry.txnMetadata.seqNo}}</div>
+                  <div class="txn_table_entry">{{entry.txnMetadata.txnTime | format_time}}</div>
+                  <div class="txn_table_entry">{{txnType(entry.txn.type)}}</div>
+                  <div class="txn_table_entry">{{entry.txnMetadata.txnId}}</div>
+                </div>
+              </div>
+
+            <div class="ledger_nav_bottom" v-if="nav.loaded">
+              <div class="ledger_count">
+                {{nav.total || 0}} record(s)
+              </div>
+              <div class="ledger_pages">
+                <ul class="pagination">
+                  <li v-for="p in nav.pages" :class="'page-item' + (p.active ? ' active' : '')">
+                    <a class="page-link" href="#" @click.prevent="gotoPage(p.index)" v-if="p.link">{{p.index}}</a>
+                    <span class="page-text" v-else>{{p.text}}</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            {% endraw %}
+          </template>
         </div>
+        <template v-if="loaded">
+          {% raw %}
+          <div class="txn_table_right">
+            <div v-if="detailSelected">
+              <div>{{detailSelected.txnMetadata.seqNo}}</div>
+              <div>
+                <template v-if="detailSelected.txnMetadata.txnId">
+                  <div>
+                    Message Wrapper
+                  </div>
+                  <div v-if="detailSelected.txnMetadata.txnId">
+                    <label>Transaction ID:</label> <span>{{detailSelected.txnMetadata.txnId}}</span>
+                  </div>
+                  <div v-if="detailSelected.txnMetadata.txnTime">
+                    <label>Transaction time:</label> <span>{{detailSelected.txnMetadata.txnTime |
+                      format_time}}
+                      ({{detailSelected.txnMetadata.txnTime}})</span>
+                  </div>
+                  <div v-if="detailSelected.reqSignature && detailSelected.reqSignature.values">
+                    <label>Signed by:</label> <span>{{detailSelected.reqSignature.values[0].from}}</span>
+                  </div>
+                </template>
+                <template v-if="detailSelected.txn && detailSelected.txn.metadata && detailSelected.txn.metadata.from">
+                  <div>
+                    Metadata
+                  </div>
+                  <div v-if="detailSelected.txn.metadata.from">
+                    <label>From nym:</label> <span>{{detailSelected.txn.metadata.from}}</span>
+                  </div>
+                  <div v-if="detailSelected.txn.metadata.reqId">
+                    <label>Request ID:</label> <span>{{detailSelected.txn.metadata.reqId}}</span>
+                  </div>
+                  <div v-if="detailSelected.txn.metadata.digest">
+                    <label>Digest:</label> <span>{{detailSelected.txn.metadata.digest}}</span>
+                  </div>
+                </template>
+                <div>
+                  Transaction
+                </div>
+                <div>
+                  <label>Type:</label> <span>{{txnType(detailSelected.txn.type)}}</span>
+                </div>
+                <template v-if="detailSelected.txn.type == '0'">
+                  <div v-if="detailSelected.txn.data.data.alias">
+                    <label>Alias:</label> <span>{{detailSelected.txn.data.data.alias}}</span>
+                  </div>
+                  <div>
+                    <label>Nym:</label> <span>{{detailSelected.txn.data.dest}}</span>
+                  </div>
+                  <div v-if="detailSelected.txn.data.data.client_ip">
+                    <label>Client IP:</label> <span>{{detailSelected.txn.data.data.client_ip}}</span>
+                  </div>
+                  <div v-if="detailSelected.txn.data.data.client_port">
+                    <label>Client port:</label> <span>{{detailSelected.txn.data.data.client_port}}</span>
+                  </div>
+                  <div v-if="detailSelected.txn.data.data.node_ip">
+                    <label>Node IP:</label> <span>{{detailSelected.txn.data.data.node_ip}}</span>
+                  </div>
+                  <div v-if="detailSelected.txn.data.data.node_port">
+                    <label>Node port:</label> <span>{{detailSelected.txn.data.data.node_port}}</span>
+                  </div>
+                  <div v-if="detailSelected.txn.data.data.services">
+                    <label>Services:</label> <span>{{detailSelected.txn.data.data.services | concat}}</span>
+                  </div>
+                </template>
+                <template v-if="detailSelected.txn.type == '1'">
+                  <div v-if="detailSelected.txn.data.alias">
+                    <label>Alias:</label> <span>{{detailSelected.txn.data.alias}}</span>
+                  </div>
+                  <div>
+                    <label>Nym:</label> <span>{{detailSelected.txn.data.dest}}</span>
+                  </div>
+                  <div>
+                    <label>Role:</label> <span>{{roleType(detailSelected.txn.data.role)}}</span>
+                  </div>
+                  <div>
+                    <label>Verkey:</label> <span>{{detailSelected.txn.data.verkey}}</span>
+                  </div>
+                </template>
+                <template v-if="detailSelected.txn.type == '4'">
+                  <div v-if="detailSelected.txn.data.version">
+                    <label>Version:</label> <span>{{detailSelected.txn.data.version}}</span>
+                  </div>
+                  <div v-if="detailSelected.txn.data.text">
+                    <label>AML:</label> <span>{{detailSelected.txn.data.text}}</span>
+                  </div>
+                </template>
+                <template v-if="detailSelected.txn.type == '5'">
+                  <div v-if="detailSelected.txn.data.version">
+                    <label>Version:</label> <span>{{detailSelected.txn.data.version}}</span>
+                  </div>
+                  <div v-if="detailSelected.txn.data.amlContext">
+                    <label>Context:</label> <span>{{detailSelected.txn.data.amlContext}}</span>
+                  </div>
+                  <div>
+                    <label>AML:</label>
+                    <dl>
+                      <template v-for="(amlVal, amlType) in detailSelected.txn.data.aml">
+                        <dt>{{amlType}}</dt>
+                        <dd>{{amlVal}}</dd>
+                      </template>
+                    </dl>
+                  </div>
+                </template>
+                <template v-if="detailSelected.txn.type == '100'">
+                  <div>
+                    <label>Nym:</label> <span>{{detailSelected.txn.data.dest}}</span>
+                  </div>
+                  <div>
+                    <label>Attribute data:</label> <span>{{detailSelected.txn.data.raw}}</span>
+                  </div>
+                </template>
+                <template v-if="detailSelected.txn.type == '101'">
+                  <div>
+                    <label>Schema name:</label> <span>{{detailSelected.txn.data.data.name}}</span>
+                  </div>
+                  <div>
+                    <label>Schema version:</label> <span>{{detailSelected.txn.data.data.version}}</span>
+                  </div>
+                  <div v-if="detailSelected.txn.data.data.attr_names">
+                    <label>Schema attributes:</label>
+                    <ul>
+                      <li v-for="attr in detailSelected.txn.data.data.attr_names">
+                        {{attr}}
+                      </li>
+                    </ul>
+                  </div>
+                </template>
+                <template v-if="detailSelected.txn.type == '102'">
+                  <div>
+                    <label>Reference:</label> <span>{{detailSelected.txn.data.ref}}</span>
+                  </div>
+                  <div>
+                    <label>Signature type:</label> <span>{{detailSelected.txn.data.signature_type}}</span>
+                  </div>
+                  <div>
+                    <label>Tag:</label> <span>{{detailSelected.txn.data.tag}}</span>
+                  </div>
+                  <div v-if="detailSelected.txn.data.data.primary">
+                    <label>Attributes:</label>
+                    <ul>
+                      <li v-for="(hash, attr) in detailSelected.txn.data.data.primary.r">
+                        {{attr}}
+                      </li>
+                    </ul>
+                </template>
+                <template v-if="detailSelected.txn.type == '113'">
+                  <div>
+                    <label>Revocation registry type:</label>
+                    <span>{{detailSelected.txn.data.revocDefType}}</span>
+                  </div>
+                  <div>
+                    <label>Credential definition ID:</label>
+                    <span>{{detailSelected.txn.data.credDefId}}</span>
+                  </div>
+                  <div>
+                    <label>Tag:</label> <span>{{detailSelected.txn.data.tag}}</span>
+                  </div>
+                  <div>
+                    <label>Issuance type:</label> <span>{{detailSelected.txn.data.value.issuanceType}}</span>
+                  </div>
+                  <div>
+                    <label>Maximum credential count:</label>
+                    <span>{{detailSelected.txn.data.value.maxCredNum}}</span>
+                  </div>
+                  <div>
+                    <label>Tails file hash:</label> <span>{{detailSelected.txn.data.value.tailsHash}}</span>
+                  </div>
+                  <div>
+                    <label>Tails file location:</label>
+                    <span>{{detailSelected.txn.data.value.tailsLocation}}</span>
+                  </div>
+                  <div>
+                    <label>Accumulator key:</label>
+                    <span>{{detailSelected.txn.data.value.publicKeys.accumKey.z}}</span>
+                  </div>
+                </template>
+                <template v-if="detailSelected.txn.type == '114'">
+                  <div>
+                    <label>Revocation registry type:</label>
+                    <span>{{detailSelected.txn.data.revocDefType}}</span>
+                  </div>
+                  <div>
+                    <label>Revocation registry ID:</label>
+                    <span>{{detailSelected.txn.data.revocRegDefId}}</span>
+                  </div>
+                  <div>
+                    <label>Accumulator value:</label> <span>{{detailSelected.txn.data.value.accum}}</span>
+                  </div>
+                </template>
+                <div @click.prevent="toggleData(detailSelected.index)">
+                  Raw Data
+                </div>
+                <div v-if="detailSelected.expanded">{{detailSelected.json}}</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="error" v-else>
+            <p>
+              <span class="fa fa-warning"></span> No transactions
+            </p>
+          </div>
+          {% endraw %}
+        </template>
       </div>
     </div>
   </main>
