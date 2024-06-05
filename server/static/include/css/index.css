@@ -130,7 +130,7 @@ header li {
   box-sizing: border-box;
   vertical-align: bottom;
 }
-header a {
+header li a {
   display: flex;
   flex: 1 1 0;
   flex-wrap: nowrap;
@@ -140,7 +140,7 @@ header a {
   transition: all 0.3s ease 0s;
   padding: 1em 1.75em;
 }
-header a:hover {
+header li a:hover {
   background-color: #0b1f61;
 }
 
@@ -707,6 +707,7 @@ h2 .fa {
 .ledger_wrapper {
   display: flex;
   flex-wrap: wrap;
+  min-height: 100vh;
 }
 .ledger_wrapper .ledger_main {
   margin-top: 2rem;
@@ -806,6 +807,17 @@ h2 .fa {
 .ledger_wrapper .txn_table_right .detail_heading {
   font-size: 1.2rem;
   font-weight: 600;
+}
+.ledger_wrapper .txn_table_right .detail_close {
+  float: right;
+  position: relative;
+  top: -40px;
+  right: 10px;
+  font-size: 200%;
+}
+.ledger_wrapper .txn_table_right .detail_close:after {
+  display: inline-block;
+  content: "×";
 }
 .ledger_wrapper .txn_table_right .detail_txn_no {
   margin-top: 1rem;

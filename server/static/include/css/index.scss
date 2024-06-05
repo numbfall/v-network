@@ -139,22 +139,22 @@ header {
 		display: inline-block;
 		box-sizing: border-box;
 		vertical-align: bottom;
-	}
-
-	a {
-		display: flex;
-		flex: 1 1 0;
-		flex-wrap: nowrap;
-		text-decoration: none;
-		font-weight: 600;
-		color: $color_white;
-		transition: all 0.3s ease 0s;
-		padding: 1em 1.75em;
-
-		&:hover {
-			background-color: $color_background;
+		a {
+			display: flex;
+			flex: 1 1 0;
+			flex-wrap: nowrap;
+			text-decoration: none;
+			font-weight: 600;
+			color: $color_white;
+			transition: all 0.3s ease 0s;
+			padding: 1em 1.75em;
+	
+			&:hover {
+				background-color: $color_background;
+			}
 		}
 	}
+
 }
 
 .row-outer {
@@ -777,6 +777,7 @@ h2 {
 .ledger_wrapper {
 	display: flex;
 	flex-wrap: wrap;
+    min-height: 100vh;
 
 	.ledger_main {
 		margin-top: 2rem;
@@ -897,8 +898,22 @@ h2 {
 			font-weight: 600;
 		}
 
+		.detail_close {
+			float: right;
+			position: relative;
+			top: -40px;
+			right: 10px;
+			font-size: 200%;
+
+			&:after {
+				display: inline-block;
+				content: "\00d7";
+			}
+		}
+
 		.detail_txn_no {
 			margin-top: 1rem;
+
 			span {
 				background-color: $color_primary;
 				display: inline-block;
@@ -906,6 +921,7 @@ h2 {
 				padding: 0.2rem 0.5rem;
 				color: $color_white;
 				border-radius: 0.3rem;
+
 				&:before {
 					content: "# "
 				}
@@ -943,11 +959,13 @@ h2 {
 			font-size: 85%;
 			margin: 1rem 0;
 			padding: 0.4rem;
+
 			&.arrow-down {
 				&:before {
 					content: "\2193";
 				}
 			}
+
 			&.arrow-up {
 				&:before {
 					content: "\2191";

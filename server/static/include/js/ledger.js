@@ -103,7 +103,7 @@ var app = new Vue({
     }
   },
   methods: {
-    clickidyClick: function (item) {
+    detailClick: function (item) {
       this.detailSelected = item;
     },
     load: function () {

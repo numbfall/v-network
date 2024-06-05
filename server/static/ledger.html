@@ -76,7 +76,7 @@
                   <div class="txn_table_heading">Type</div>
                   <div class="txn_table_heading">Transaction ID</div>
                 </div>
-                <div class="txn_table_entries" v-for="entry in txns" @click="clickidyClick(entry)">
+                <div class="txn_table_entries" v-for="entry in txns" @click="detailClick(entry)">
                   <div class="txn_table_entry">{{entry.txnMetadata.seqNo}}</div>
                   <div class="txn_table_entry">{{entry.txnMetadata.txnTime | format_time}}</div>
                   <div class="txn_table_entry">{{txnType(entry.txn.type)}}</div>
@@ -107,6 +107,7 @@
               <h1 class="detail_heading">
                 Transaction Details
               </h1>
+              <div class="detail_close" @click="detailClick(detailSelected = null)"></div>
               <div class="detail_txn_no"><span>{{detailSelected.txnMetadata.seqNo}}</span></div>
               <div>
                 <template v-if="detailSelected.txnMetadata.txnId">
