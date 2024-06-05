@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import "/include/css/reset.css";
 @keyframes blink-animation {
   to {
@@ -143,10 +144,6 @@ header a:hover {
   background-color: #0b1f61;
 }
 
-main {
-  padding: 1rem 1rem;
-}
-
 .row-outer {
   width: 100%;
 }
@@ -288,6 +285,7 @@ h2 .fa {
 
 .panel {
   overflow: hidden;
+  padding: 2rem 0;
 }
 
 .panel-heading {
@@ -708,8 +706,11 @@ h2 .fa {
 
 .ledger_wrapper {
   display: flex;
+  flex-wrap: wrap;
 }
 .ledger_wrapper .ledger_main {
+  margin-top: 2rem;
+  margin-left: 2rem;
   flex: 0 0 60%;
 }
 .ledger_wrapper .ledger_main .ledger-heading {
@@ -766,6 +767,7 @@ h2 .fa {
 .ledger_wrapper .ledger_main .txn_table_main {
   display: table;
   font-size: 90%;
+  width: 100%;
 }
 .ledger_wrapper .ledger_main .txn_table_main .txn_table_header {
   display: table-header-group;
@@ -796,14 +798,62 @@ h2 .fa {
   text-overflow: ellipsis;
 }
 .ledger_wrapper .txn_table_right {
-  padding: 1.4rem;
-  overflow-y: scroll;
+  padding: 2rem;
   border-left: 1px solid #89a;
-  max-height: 100vh;
   text-wrap: wrap;
+  flex: 1;
+}
+.ledger_wrapper .txn_table_right .detail_heading {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+.ledger_wrapper .txn_table_right .detail_txn_no {
+  margin-top: 1rem;
+}
+.ledger_wrapper .txn_table_right .detail_txn_no span {
+  background-color: #1c6da6;
+  display: inline-block;
+  width: auto;
+  padding: 0.2rem 0.5rem;
+  color: #fff;
+  border-radius: 0.3rem;
+}
+.ledger_wrapper .txn_table_right .detail_txn_no span:before {
+  content: "# ";
+}
+.ledger_wrapper .txn_table_right textarea {
+  width: 90%;
+  height: 300px;
+  padding: 2rem 2rem;
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  border-radius: 0.8rem;
+}
+.ledger_wrapper .txn_table_right label {
+  color: #888;
+  font-weight: 600;
+  font-size: 85%;
+}
+.ledger_wrapper .txn_table_right span {
+  display: block;
+  font-size: 95%;
 }
 .ledger_wrapper .txn_table_right div {
-  padding: 0.4rem 1rem;
+  margin: 0.4rem 0;
+}
+.ledger_wrapper .txn_table_right .detail_txn_section {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  text-align: right;
+  color: #888;
+  font-weight: 600;
+  font-size: 85%;
+  margin: 1rem 0;
+  padding: 0.4rem;
+}
+.ledger_wrapper .txn_table_right .detail_txn_section.arrow-down:before {
+  content: "↓";
+}
+.ledger_wrapper .txn_table_right .detail_txn_section.arrow-up:before {
+  content: "↑";
 }
 
 @media screen and (max-width: 900px) {

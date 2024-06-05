@@ -157,10 +157,6 @@ header {
 	}
 }
 
-main {
-	padding: 1rem 1rem;
-}
-
 .row-outer {
 	width: 100%;
 }
@@ -313,6 +309,7 @@ h2 {
 
 .panel {
 	overflow: hidden;
+	padding: 2rem 0;
 }
 
 .panel-heading {
@@ -779,8 +776,11 @@ h2 {
 
 .ledger_wrapper {
 	display: flex;
+	flex-wrap: wrap;
 
 	.ledger_main {
+		margin-top: 2rem;
+		margin-left: 2rem;
 		flex: 0 0 60%;
 
 		.ledger-heading {
@@ -845,6 +845,7 @@ h2 {
 		.txn_table_main {
 			display: table;
 			font-size: 90%;
+			width: 100%;
 
 			.txn_table_header {
 				display: table-header-group;
@@ -885,14 +886,73 @@ h2 {
 
 
 	.txn_table_right {
-		padding: 1.4rem;
-		overflow-y: scroll;
+		padding: 2rem;
 		border-left: 1px solid #89a;
-		max-height: 100vh;
+		// max-height: 100vh;
 		text-wrap: wrap;
+		flex: 1;
+
+		.detail_heading {
+			font-size: 1.2rem;
+			font-weight: 600;
+		}
+
+		.detail_txn_no {
+			margin-top: 1rem;
+			span {
+				background-color: $color_primary;
+				display: inline-block;
+				width: auto;
+				padding: 0.2rem 0.5rem;
+				color: $color_white;
+				border-radius: 0.3rem;
+				&:before {
+					content: "# "
+				}
+			}
+		}
+
+		textarea {
+			width: 90%;
+			height: 300px;
+			padding: 2rem 2rem;
+			font-family: $font-family_mono;
+			border-radius: 0.8rem;
+		}
+
+		label {
+			color: $color_gray;
+			font-weight: 600;
+			font-size: 85%;
+		}
+
+		span {
+			display: block;
+			font-size: 95%;
+		}
 
 		div {
-			padding: 0.4rem 1rem;
+			margin: 0.4rem 0;
+		}
+
+		.detail_txn_section {
+			border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+			text-align: right;
+			color: $color_gray;
+			font-weight: 600;
+			font-size: 85%;
+			margin: 1rem 0;
+			padding: 0.4rem;
+			&.arrow-down {
+				&:before {
+					content: "\2193";
+				}
+			}
+			&.arrow-up {
+				&:before {
+					content: "\2191";
+				}
+			}
 		}
 	}
 
