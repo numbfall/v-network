@@ -107,7 +107,7 @@ header .logo span {
   display: inline-block;
 }
 header .logo .logo-img img {
-  width: 50px;
+  width: 70px;
 }
 header .logo .logo-text {
   color: #fff;
@@ -124,7 +124,7 @@ header nav {
 }
 header ul {
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   text-align: center;
 }
 header li {
