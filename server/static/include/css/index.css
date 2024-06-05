@@ -906,6 +906,7 @@ h2 .fa {
   top: -40px;
   right: 10px;
   font-size: 200%;
+  cursor: pointer;
 }
 .ledger_wrapper .txn_table_right .detail_close:after {
   display: inline-block;
