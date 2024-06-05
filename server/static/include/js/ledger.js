@@ -153,6 +153,7 @@ var app = new Vue({
     },
     updateLedger: function () {
       this.navToPage(null, { page: 1, query: this.query, txn_type: this.txn_type });
+      this.detailSelected = '';
     },
     updateQuery: function (q) {
       this.query = q;
@@ -160,6 +161,7 @@ var app = new Vue({
     },
     clearFilter: function () {
       this.navToPage(null, { page: 1, query: '', txn_type: '' });
+      this.detailSelected = '';
     },
     entryUrl: function (ident) {
       var url = '/browse/' + this.ledger;
