@@ -76,7 +76,11 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: "Open Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
   font-size: 16px;
   line-height: 1.45;
   margin: 0;
@@ -285,7 +289,7 @@ h2 .fa {
 
 .panel {
   overflow: hidden;
-  padding: 2rem 0;
+  padding: 1.4rem 0;
 }
 
 .panel-heading {
@@ -378,23 +382,6 @@ h2 .fa {
   padding: 0 0.8rem;
 }
 
-.node-name {
-  font-size: 15px;
-  position: absolute;
-  text-align: center;
-  top: 34px;
-  width: 100%;
-  z-index: 2;
-}
-
-.nodeval-name {
-  color: #888;
-  display: block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
 .node-indicator {
   margin: auto;
   max-width: 100px;
@@ -426,8 +413,12 @@ h2 .fa {
   color: #888;
 }
 
+.not-ready {
+  padding: 0 2rem;
+}
+
 .nodeval-did {
-  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-family: monospace;
 }
 
 .ledger-txns {
@@ -480,7 +471,7 @@ h2 .fa {
   text-align: center;
 }
 .pagination .page-item {
-  border: 1px solid #9bf;
+  border: 1px solid #888;
   display: block;
   z-index: 1;
 }
@@ -506,11 +497,10 @@ h2 .fa {
   padding: 0.25em 0.4em;
 }
 .pagination .page-item.active {
-  background-color: #e9f5ff;
-  font-weight: bold;
+  background-color: rgba(0, 0, 0, 0.08);
 }
 .pagination .page-item.active .page-link {
-  color: #000;
+  color: #333;
 }
 .pagination .page-item.disabled {
   border-color: #aaa;
@@ -552,7 +542,7 @@ h2 .fa {
 }
 
 .raw-data {
-  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-family: monospace;
   font-size: 70%;
   white-space: pre-wrap;
   word-break: break-word;
@@ -606,7 +596,7 @@ h2 .fa {
 }
 
 .ident {
-  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-family: monospace;
   font-size: 80%;
   font-variant-numeric: lining-nums tabular-nums;
 }
@@ -736,14 +726,15 @@ h2 .fa {
   border-radius: 0.2rem;
   padding: 0.8rem 1.2rem;
   width: 200px;
+  font-weight: 600;
 }
 .ledger_wrapper .ledger_main .ledger_nav_top select {
   background: url("data:image/svg+xml,<svg height='10px' width='10px' viewBox='0 0 16 16' fill='%23000000' xmlns='http://www.w3.org/2000/svg'><path d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/></svg>") no-repeat;
-  background-position: calc(100% - 0.75rem) center !important;
-  -moz-appearance: none !important;
-  -webkit-appearance: none !important;
-  appearance: none !important;
-  padding-right: 2rem !important;
+  background-position: calc(100% - 0.75rem) center;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  padding-right: 2rem;
 }
 .ledger_wrapper .ledger_main .ledger_nav_top .clear_filter {
   border: 1px solid #888;
@@ -753,6 +744,8 @@ h2 .fa {
   align-items: center;
   background-color: #b55;
   color: #fff;
+  font-weight: 600;
+  font-size: 90%;
 }
 .ledger_wrapper .ledger_main .ledger_nav_top .ledger_search {
   display: flex;
@@ -764,6 +757,7 @@ h2 .fa {
   justify-content: space-between;
   padding: 0.4rem 1.4rem;
   align-items: center;
+  font-weight: 500;
 }
 .ledger_wrapper .ledger_main .txn_table_main {
   display: table;
@@ -784,7 +778,7 @@ h2 .fa {
 .ledger_wrapper .ledger_main .txn_table_main .txn_table_entries {
   display: table-row;
   box-shadow: 0 1px 0px 0px rgba(0, 0, 0, 0.08);
-  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-weight: 500;
 }
 .ledger_wrapper .ledger_main .txn_table_main .txn_table_entries:hover {
   background-color: rgba(0, 0, 0, 0.08);
@@ -837,7 +831,7 @@ h2 .fa {
   width: 90%;
   height: 300px;
   padding: 2rem 2rem;
-  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-family: monospace;
   border-radius: 0.8rem;
 }
 .ledger_wrapper .txn_table_right label {
@@ -851,6 +845,7 @@ h2 .fa {
 }
 .ledger_wrapper .txn_table_right div {
   margin: 0.4rem 0;
+  font-weight: 500;
 }
 .ledger_wrapper .txn_table_right .detail_txn_section {
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);

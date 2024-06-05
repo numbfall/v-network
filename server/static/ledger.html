@@ -7,11 +7,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ LEDGER_INSTANCE_NAME }} Blockchain Ledger</title>
   <link href="/include/css/index.css?v=1" rel="stylesheet">
-  <!-- <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"> -->
-  <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"> -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
   <script src="/include/js/common.js"></script>
-  <!-- <script src="https://cdn.tailwindcss.com"></script> -->
   <script type="text/javascript" src="http://livejs.com/live.js"></script>
 
   {% include 'analytics.html' %}
@@ -69,20 +69,20 @@
           <template v-if="loaded">
             {% raw %}
 
-              <div class="txn_table_main" v-if="txns.length">
-                <div class="txn_table_header">
-                  <div class="txn_table_heading">Txn No</div>
-                  <div class="txn_table_heading">Time</div>
-                  <div class="txn_table_heading">Type</div>
-                  <div class="txn_table_heading">Transaction ID</div>
-                </div>
-                <div class="txn_table_entries" v-for="entry in txns" @click="detailClick(entry)">
-                  <div class="txn_table_entry">{{entry.txnMetadata.seqNo}}</div>
-                  <div class="txn_table_entry">{{entry.txnMetadata.txnTime | format_time}}</div>
-                  <div class="txn_table_entry">{{txnType(entry.txn.type)}}</div>
-                  <div class="txn_table_entry">{{entry.txnMetadata.txnId}}</div>
-                </div>
+            <div class="txn_table_main" v-if="txns.length">
+              <div class="txn_table_header">
+                <div class="txn_table_heading">Txn No</div>
+                <div class="txn_table_heading">Time</div>
+                <div class="txn_table_heading">Type</div>
+                <div class="txn_table_heading">Transaction ID</div>
               </div>
+              <div class="txn_table_entries" v-for="entry in txns" @click="detailClick(entry)">
+                <div class="txn_table_entry">{{entry.txnMetadata.seqNo}}</div>
+                <div class="txn_table_entry">{{entry.txnMetadata.txnTime | format_time}}</div>
+                <div class="txn_table_entry">{{txnType(entry.txn.type)}}</div>
+                <div class="txn_table_entry">{{entry.txnMetadata.txnId}}</div>
+              </div>
+            </div>
 
             <div class="ledger_nav_bottom" v-if="nav.loaded">
               <div class="ledger_count">
@@ -294,7 +294,8 @@
                     <label>Accumulator value</label> <span>{{detailSelected.txn.data.value.accum}}</span>
                   </div>
                 </template>
-                <div class="detail_txn_section" :class="'arrow-' + (detailSelected.expanded ? 'up' : 'down')" @click.prevent="toggleData(detailSelected.index)">
+                <div class="detail_txn_section" :class="'arrow-' + (detailSelected.expanded ? 'up' : 'down')"
+                  @click.prevent="toggleData(detailSelected.index)">
                   Raw Data
                 </div>
                 <textarea v-if="detailSelected.expanded">{{detailSelected.json}}</textarea>
