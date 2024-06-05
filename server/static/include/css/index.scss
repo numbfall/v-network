@@ -390,28 +390,24 @@ h2 {
 .panel-node {
 	display: flex;
 	justify-content: center;
-	width: 100%;
-	flex-flow: row wrap;
+	flex-flow: row;
+	flex-wrap: wrap;
+	gap: 2rem;
 }
 
 .node-status {
-	display: inline-block;
-	flex-direction: row;
 	display: flex;
-	flex: 0 1 500px;
-	margin: 0.8rem;
+	flex-direction: row;
 	padding: 0.8rem;
-	height: 300px;
-	align-items: stretch;
 	box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+	background-color: rgba(0, 0, 0, 0.02);
+	border-radius: 0.3rem;
+	justify-content: center;
+	align-items: center;
 }
 
 .node-status-left {
-	flex: 0 1 50%;
-	display: flex;
-	overflow: hidden;
-	position: relative;
-	padding: 0 0.8rem;
+	padding: 0 2rem;
 }
 
 // .node-name {
@@ -432,20 +428,19 @@ h2 {
 // }
 
 .node-indicator {
-	margin: auto;
 	max-width: 100px;
+	min-width: 80px;
 }
 
 .node-status-right {
-	flex: 1 1 auto;
-	overflow: hidden;
 	word-wrap: break-word;
-	align-self: center;
 	padding: 0 0.8rem;
+	flex-basis: min-content;
 }
 
 .props {
 	font-size: 80%;
+	font-weight: 500;
 	margin: 0;
 
 	dt {
@@ -472,6 +467,13 @@ h2 {
 
 .nodeval-did {
 	font-family: $font-family_mono;
+	font-weight: 300;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: inline-block;
+	width: 90%;
+	word-wrap: normal;
+	vertical-align: bottom;
 }
 
 .ledger-txns {
@@ -880,10 +882,11 @@ h2 {
 				box-shadow: 0 1px 0px 0px rgba(0, 0, 0, 0.08);
 				// font-family: $font-family_mono;
 				font-weight: 500;
+				transition: background-color 0.5s;
+				cursor: pointer;
 
 				&:hover {
-					background-color: rgba(0, 0, 0, 0.08);
-					cursor: pointer;
+					background-color: rgba(0, 0, 0, 0.04);
 				}
 
 				.txn_table_entry {
@@ -977,12 +980,14 @@ h2 {
 			padding: 0.4rem;
 
 			&.arrow-down {
+				cursor: pointer;
 				&:before {
 					content: "\2193";
 				}
 			}
 
 			&.arrow-up {
+				cursor: pointer;
 				&:before {
 					content: "\2191";
 				}

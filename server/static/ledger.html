@@ -298,7 +298,7 @@
                   @click.prevent="toggleData(detailSelected.index)">
                   Raw Data
                 </div>
-                <textarea v-if="detailSelected.expanded">{{detailSelected.json}}</textarea>
+                <textarea readonly spellcheck="false" v-if="detailSelected.expanded">{{detailSelected.json}}</textarea>
               </div>
             </div>
           </div>
