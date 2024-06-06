@@ -1,31 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="/include/img/ledger.png" type="image/png">
-  <title>{{ LEDGER_INSTANCE_NAME }} Blockchain Ledger</title>
-  <link href="/include/css/index.css?v=1" rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
-    rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
-  <script src="/include/js/common.js"></script>
-  <script type="text/javascript" src="http://livejs.com/live.js"></script>
-
+  {% include 'meta.html' %}
   {% include 'analytics.html' %}
-
 </head>
 
 <body>
 
   {% include 'header.html' %}
 
-  <main>
-    <div id="vue-ledger">
+  <main id="vue-ledger">
       <div class="ledger_wrapper">
         <div class="ledger_main">
           <h1 class="ledger-heading">
@@ -81,7 +66,8 @@
                 <div class="txn_table_entry">{{entry.txnMetadata.seqNo}}</div>
                 <div class="txn_table_entry">{{entry.txnMetadata.txnTime | format_time}}</div>
                 <div class="txn_table_entry">{{txnType(entry.txn.type)}}</div>
-                <div class="txn_table_entry">{{entry.txnMetadata.txnId}}</div>
+                <div v-if="entry.txnMetadata.txnId" class="txn_table_entry">{{entry.txnMetadata.txnId}}</div>
+                <div v-else class="txn_table_entry error">Transaction ID Not Available</div>
               </div>
             </div>
             <!-- <div class="error" v-else>
@@ -310,7 +296,6 @@
           </div>
         </div>
       </div>
-    </div>
   </main>
   <script src="/include/js/ledger.js?v=1" type="text/javascript"></script>
 </body>

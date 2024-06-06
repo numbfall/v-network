@@ -2,20 +2,7 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="/include/img/ledger.png" type="image/png">
-  <title>{{ LEDGER_INSTANCE_NAME }} Blockchain Ledger</title>
-  <link href="/include/css/index.css?v=1" rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
-    rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
-  <script src="include/js/common.js"></script>
-  <script type="text/javascript" src="http://livejs.com/live.js"></script>
-
+  {% include 'meta.html' %}
   {% include 'analytics.html' %}
 
 </head>
@@ -26,36 +13,32 @@
 
   {% raw %}
   <main id="vue-outer">
-    <div :class="'row-outer' + (anonymous ? ' anonymous' : '')">
-
-      <div class="col-main">
-        <div style="display: none" v-show="init_error">
-          <div class="error">
-            <p>
-              {{ init_error }}
-            </p>
-          </div>
+    <div :class="'wrapper_outer' + (anonymous ? ' anonymous' : '')">
+      <div style="display: none" v-show="init_error">
+        <div class="error">
+          <p>
+            {{ init_error }}
+          </p>
         </div>
-        <div style="display: none" v-show="! ready && ! init_error">
-          <div class="not-ready">
-            <div class="lds-grid">
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
-            <p>
-              Connecting to server...
-            </p>
-          </div>
+      </div>
+      <div class="not_ready" style="display: none" v-show="! ready && ! init_error">
+        <div class="lds-grid">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
         </div>
+        <p>
+          Connecting to server...
+        </p>
+      </div>
 
-        <!-- <div class="columns-1 md:columns-2">
+      <!-- <div class="columns-1 md:columns-2">
           <div class="panel panel-default panel-ledger-status" style="display: none" v-show="ready">
             <div class="panel-heading">
               <h2>
@@ -107,118 +90,113 @@
         </div> -->
 
 
-        <div class="panel panel-default panel-node-status" style="display: none" v-show="ready && ! anonymous">
-          <div class="panel-body">
-            <div class="panel panel-node">
-              <div class="panel-body" v-if="! status">
-                <div class="lds-ring">
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                </div>
-                <div>Loading status ...</div>
+      <div class="nodes-panel" style="display: none" v-show="ready && ! anonymous">
+        <div class="not_ready" v-if="! status">
+          <div class="lds-ring">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+          <p>Loading status ...</p>
+        </div>
+        <div class="error" v-if="status && status.err">
+          <p>
+            Error loading validator node status.
+          </p>
+        </div>
+        <template v-if="status && status.rows">
+          <div class="node-status" v-for="row in status.rows">
+            <div class="node-status-left">
+              <div class="node-indicator">
+                <svg width="100%" version="1.1" viewBox="0 0 29.459 49.278" xmlns="http://www.w3.org/2000/svg">
+                  <g transform="translate(-73.619 -82.509)">
+                    <path d="m73.659 88.399v39.344l20.543 4.0436v-39.344z" fill="#939dac" stroke-width=".26458" />
+                    <path d="m73.619 88.399 10.287-5.89 19.172 3.896-8.9091 6.0539z" fill="#6f7c91"
+                      stroke-width=".26458" />
+                    <g fill="#535d6c" stroke-width=".26458">
+                      <path d="m94.171 92.447 0.03054 39.309 8.6765-5.8876 0.08-39.464z" />
+                      <path d="m74.79 93.6v3.268l18.253 3.7043v-3.2679z" />
+                      <path d="m74.79 97.784v3.268l18.253 3.7043v-3.268z" />
+                      <path d="m74.79 102.08v3.268l18.253 3.7043v-3.268z" />
+                    </g>
+                    <g fill="#b7bec8">
+                      <path d="m75.754 108.18v17.502l16.214 3.1476-0.10966-17.303z" stroke-width=".26458" />
+                      <g stroke-width=".26766">
+                        <rect transform="matrix(.97475 .22329 -.010815 .99994 0 0)" x="78.56" y="76.815" width=".62995"
+                          height="2.1544" ry=".28635" />
+                        <rect transform="matrix(.97475 .22329 -.010815 .99994 0 0)" x="79.432" y="76.807" width=".62995"
+                          height="2.1544" ry=".28635" />
+                        <rect transform="matrix(.97475 .22329 -.010815 .99994 0 0)" x="80.324" y="76.802" width=".62995"
+                          height="2.1544" ry=".28635" />
+                        <rect transform="matrix(.97475 .22329 -.010815 .99994 0 0)" x="78.606" y="80.934" width=".62995"
+                          height="2.1544" ry=".28635" />
+                        <rect transform="matrix(.97475 .22329 -.010815 .99994 0 0)" x="79.478" y="80.925" width=".62995"
+                          height="2.1544" ry=".28635" />
+                        <rect transform="matrix(.97475 .22329 -.010815 .99994 0 0)" x="80.37" y="80.934" width=".62995"
+                          height="2.1544" ry=".28635" />
+                        <rect transform="matrix(.97475 .22329 -.010815 .99994 0 0)" x="78.654" y="85.262" width=".62995"
+                          height="2.1544" ry=".28635" />
+                        <rect transform="matrix(.97475 .22329 -.010815 .99994 0 0)" x="79.526" y="85.253" width=".62995"
+                          height="2.1544" ry=".28635" />
+                        <rect transform="matrix(.97475 .22329 -.010815 .99994 0 0)" x="80.418" y="85.262" width=".62995"
+                          height="2.1544" ry=".28635" />
+                      </g>
+                    </g>
+                    <rect class="orange" transform="matrix(.9832 .18253 -.096504 .99533 0 0)" x="96.132" y="75.51"
+                      width="2.2085" height="1.2627" ry=".59192" fill="#ffa700" stroke-width=".24612" />
+                    <rect transform="matrix(.9832 .18253 -.096504 .99533 0 0)" x="99.021" y="75.49" width="2.2085"
+                      height="1.2627" ry=".59192" fill="#888" stroke-width=".24612" />
+                    <rect class="blink" transform="matrix(.9832 .18253 -.096504 .99533 0 0)" x="99.021" y="75.49"
+                      width="2.2085" height="1.2627" ry=".59192" fill="#5f5" stroke-width=".24612" />
+                  </g>
+                </svg>
               </div>
-              <div class="panel-body error" v-if="status && status.err">
-                <p>
-                  Error loading validator node status.
-                </p>
-              </div>
-              <template v-if="status && status.rows">
-                <div class="panel-body node-status" v-for="row in status.rows">
-                  <div class="node-status-left">
-                    <div class="node-indicator" :class="row.name">
-                      <svg width="100%" version="1.1" viewBox="0 0 29.459 49.278" xmlns="http://www.w3.org/2000/svg">
-                        <g transform="translate(-73.619 -82.509)">
-                          <path d="m73.659 88.399v39.344l20.543 4.0436v-39.344z" fill="#939dac" stroke-width=".26458" />
-                          <path d="m73.619 88.399 10.287-5.89 19.172 3.896-8.9091 6.0539z" fill="#6f7c91"
-                            stroke-width=".26458" />
-                          <g fill="#535d6c" stroke-width=".26458">
-                            <path d="m94.171 92.447 0.03054 39.309 8.6765-5.8876 0.08-39.464z" />
-                            <path d="m74.79 93.6v3.268l18.253 3.7043v-3.2679z" />
-                            <path d="m74.79 97.784v3.268l18.253 3.7043v-3.268z" />
-                            <path d="m74.79 102.08v3.268l18.253 3.7043v-3.268z" />
-                          </g>
-                          <g fill="#b7bec8">
-                            <path d="m75.754 108.18v17.502l16.214 3.1476-0.10966-17.303z" stroke-width=".26458" />
-                            <g stroke-width=".26766">
-                              <rect transform="matrix(.97475 .22329 -.010815 .99994 0 0)" x="78.56" y="76.815"
-                                width=".62995" height="2.1544" ry=".28635" />
-                              <rect transform="matrix(.97475 .22329 -.010815 .99994 0 0)" x="79.432" y="76.807"
-                                width=".62995" height="2.1544" ry=".28635" />
-                              <rect transform="matrix(.97475 .22329 -.010815 .99994 0 0)" x="80.324" y="76.802"
-                                width=".62995" height="2.1544" ry=".28635" />
-                              <rect transform="matrix(.97475 .22329 -.010815 .99994 0 0)" x="78.606" y="80.934"
-                                width=".62995" height="2.1544" ry=".28635" />
-                              <rect transform="matrix(.97475 .22329 -.010815 .99994 0 0)" x="79.478" y="80.925"
-                                width=".62995" height="2.1544" ry=".28635" />
-                              <rect transform="matrix(.97475 .22329 -.010815 .99994 0 0)" x="80.37" y="80.934"
-                                width=".62995" height="2.1544" ry=".28635" />
-                              <rect transform="matrix(.97475 .22329 -.010815 .99994 0 0)" x="78.654" y="85.262"
-                                width=".62995" height="2.1544" ry=".28635" />
-                              <rect transform="matrix(.97475 .22329 -.010815 .99994 0 0)" x="79.526" y="85.253"
-                                width=".62995" height="2.1544" ry=".28635" />
-                              <rect transform="matrix(.97475 .22329 -.010815 .99994 0 0)" x="80.418" y="85.262"
-                                width=".62995" height="2.1544" ry=".28635" />
-                            </g>
-                          </g>
-                          <rect class="orange" transform="matrix(.9832 .18253 -.096504 .99533 0 0)" x="96.132" y="75.51"
-                            width="2.2085" height="1.2627" ry=".59192" fill="#ffa700" stroke-width=".24612" />
-                          <rect transform="matrix(.9832 .18253 -.096504 .99533 0 0)" x="99.021" y="75.49" width="2.2085"
-                            height="1.2627" ry=".59192" fill="#888" stroke-width=".24612" />
-                          <rect class="blink" transform="matrix(.9832 .18253 -.096504 .99533 0 0)" x="99.021" y="75.49"
-                            width="2.2085" height="1.2627" ry=".59192" fill="#5f5" stroke-width=".24612" />
-                        </g>
-                      </svg>
-                    </div>
-                  </div>
-                  <div class="node-status-right">
-                    <dl class="props">
-                      <dt>Node properties</dt>
-                      <dd class="node-name"><span class="label">Node:</span> <span class="nodeval-name">{{ row.name
-                          }}</span></dd>
-                      <dd class="node-did"><span class="label">DID:</span> <span class="nodeval-did">{{ row.did
-                          }}</span></dd>
-                      <dd class="node-state" v-if="row.state"><span class="label">State:</span> <span
-                          class="nodeval-state">{{ row.state }}</span></dd>
-                      <dd class="node-uptime"><span class="label">Uptime:</span> <span class="nodeval-uptime">{{
-                          row.uptime }}</span></dd>
-                      <dd class="node-txns"><span class="label">Txns:</span> <span class="nodeval-txns">{{ row.txns
-                          }}</span></dd>
-                      <dd class="node-unreach" v-if="row.unreachable"><span class="lavel">Unreachable hosts:</span>
-                        <span class="nodeval-unreach">{{ row.unreachable }}</span>
-                      </dd>
-                      <dd class="node-indyver"><span class="label">indy-node version:</span> <span
-                          class="nodeval-indyver">{{ row.indy_version }}</span></dd>
-                    </dl>
-                  </div>
-                </div>
-              </template>
             </div>
-            <!-- <p>
+            <div class="node-status-right">
+              <dl class="props">
+                <dt>Node properties</dt>
+                <dd class="node-name"><span class="label">Node:</span> <span class="nodeval-name">{{ row.name
+                    }}</span></dd>
+                <dd class="node-did"><span class="label">DID:</span> <span class="nodeval-did">{{ row.did
+                    }}</span></dd>
+                <dd class="node-state" v-if="row.state"><span class="label">State:</span> <span class="nodeval-state">{{
+                    row.state }}</span></dd>
+                <dd class="node-uptime"><span class="label">Uptime:</span> <span class="nodeval-uptime">{{
+                    row.uptime }}</span></dd>
+                <dd class="node-txns"><span class="label">Txns:</span> <span class="nodeval-txns">{{ row.txns
+                    }}</span></dd>
+                <dd class="node-unreach" v-if="row.unreachable"><span class="lavel">Unreachable hosts:</span>
+                  <span class="nodeval-unreach">{{ row.unreachable }}</span>
+                </dd>
+                <dd class="node-indyver"><span class="label">indy-node version:</span> <span class="nodeval-indyver">{{
+                    row.indy_version }}</span></dd>
+              </dl>
+            </div>
+          </div>
+        </template>
+      </div>
+      <!-- <p>
               View detailed information about the status of the running validator nodes:
             </p>
             <p>
               <a href="/status/text" class="tool"><span class="fa fa-chevron-right left"></span>Detailed Status</a>
             </p> -->
+      <div class="detail-hero">
+        <div class="detail-hero-left">
+          <div>
+            <p>
+              View detailed information about the status of the running validator nodes:
+            </p>
           </div>
-          <div class="detail-hero">
-            <div class="detail-hero-left">
-              <div>
-                <p>
-                  View detailed information about the status of the running validator nodes:
-                </p>
-              </div>
-              <div class="button"><a href="/status/text" class="button-link">Detailed Status</a></div>
-            </div>
-            <div class="detail-hero-right">
-              <img src="/include/img/v2v.webp" alt="v2v">
-            </div>
-          </div>
+          <div class="button"><a href="/status/text" class="button-link">Detailed Status</a></div>
         </div>
+        <div class="detail-hero-right">
+          <img src="/include/img/v2v.webp" alt="v2v">
+        </div>
+      </div>
 
-
-        <!-- <div class="panel panel-default authorize" v-if="register_new_dids">
+      <!-- <div class="panel panel-default authorize" v-if="register_new_dids">
           <div class="panel-heading">
             <h2>
               <span class="fa fa-key"></span>
@@ -301,10 +279,6 @@
             </div>
           </div>
         </div> -->
-
-      </div>
-
-
     </div>
   </main>
   {% endraw %}
