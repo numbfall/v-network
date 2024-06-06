@@ -38,6 +38,28 @@ $color_background: #0b1f61;
 	}
 }
 
+@keyframes lds-grid {
+
+	0%,
+	100% {
+		opacity: 1;
+	}
+
+	50% {
+		opacity: 0.5;
+	}
+}
+
+@keyframes lds-ring {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
 /*# sourceMappingURL=index.css.map */
 .blink {
 	-webkit-animation: blink-animation 0.5s steps(5, start) infinite;
@@ -409,18 +431,6 @@ button {
 	}
 }
 
-@keyframes lds-grid {
-
-	0%,
-	100% {
-		opacity: 1;
-	}
-
-	50% {
-		opacity: 0.5;
-	}
-}
-
 .lds-ring {
 	box-sizing: border-box;
 	display: block;
@@ -454,16 +464,6 @@ button {
 		&:nth-child(3) {
 			animation-delay: -0.15s;
 		}
-	}
-}
-
-@keyframes lds-ring {
-	0% {
-		transform: rotate(0deg);
-	}
-
-	100% {
-		transform: rotate(360deg);
 	}
 }
 
@@ -600,8 +600,8 @@ button {
 
 			.txn_table_header {
 				display: table-header-group;
-				background-color: rgba(0, 0, 0, 0.05);
-				color: $color_darkgray;
+				background-color: rgba(28, 109, 166, 0.9);
+				color: $color_white;
 
 				.txn_table_heading {
 					display: table-cell;
