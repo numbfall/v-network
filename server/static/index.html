@@ -114,14 +114,74 @@
                     row.uptime }}</span></dd>
                 <dd class="node-txns"><span class="label">Txns:</span> <span class="nodeval-txns">{{ row.txns
                     }}</span></dd>
-                <dd class="node-unreach" v-if="row.unreachable"><span class="lavel">Unreachable hosts:</span>
+                <!-- <dd class="node-unreach" v-if="row.unreachable"><span class="lavel">Unreachable hosts:</span>
                   <span class="nodeval-unreach">{{ row.unreachable }}</span>
-                </dd>
+                </dd> -->
                 <dd class="node-indyver"><span class="label">indy-node version:</span> <span class="nodeval-indyver">{{
                     row.indy_version }}</span></dd>
               </dl>
             </div>
           </div>
+          <template v-if="status.rows[0].unreachable">
+            <div class="node-status dead" v-for="dead in status.rows[0].unreachable.split(', ')">
+              <div class="node-status-left">
+                <div class="node-indicator">
+                  <svg width="100%" version="1.1" viewBox="0 0 29.459 49.278" xmlns="http://www.w3.org/2000/svg">
+                    <g transform="translate(-73.619 -82.509)">
+                      <path d="m73.659 88.399v39.344l20.543 4.0436v-39.344z" fill="#939dac" stroke-width=".26458" />
+                      <path d="m73.619 88.399 10.287-5.89 19.172 3.896-8.9091 6.0539z" fill="#6f7c91"
+                        stroke-width=".26458" />
+                      <g fill="#535d6c" stroke-width=".26458">
+                        <path d="m94.171 92.447 0.03054 39.309 8.6765-5.8876 0.08-39.464z" />
+                        <path d="m74.79 93.6v3.268l18.253 3.7043v-3.2679z" />
+                        <path d="m74.79 97.784v3.268l18.253 3.7043v-3.268z" />
+                        <path d="m74.79 102.08v3.268l18.253 3.7043v-3.268z" />
+                      </g>
+                      <g fill="#b7bec8">
+                        <path d="m75.754 108.18v17.502l16.214 3.1476-0.10966-17.303z" stroke-width=".26458" />
+                        <g stroke-width=".26766">
+                          <rect transform="matrix(.97475 .22329 -.010815 .99994 0 0)" x="78.56" y="76.815"
+                            width=".62995" height="2.1544" ry=".28635" />
+                          <rect transform="matrix(.97475 .22329 -.010815 .99994 0 0)" x="79.432" y="76.807"
+                            width=".62995" height="2.1544" ry=".28635" />
+                          <rect transform="matrix(.97475 .22329 -.010815 .99994 0 0)" x="80.324" y="76.802"
+                            width=".62995" height="2.1544" ry=".28635" />
+                          <rect transform="matrix(.97475 .22329 -.010815 .99994 0 0)" x="78.606" y="80.934"
+                            width=".62995" height="2.1544" ry=".28635" />
+                          <rect transform="matrix(.97475 .22329 -.010815 .99994 0 0)" x="79.478" y="80.925"
+                            width=".62995" height="2.1544" ry=".28635" />
+                          <rect transform="matrix(.97475 .22329 -.010815 .99994 0 0)" x="80.37" y="80.934"
+                            width=".62995" height="2.1544" ry=".28635" />
+                          <rect transform="matrix(.97475 .22329 -.010815 .99994 0 0)" x="78.654" y="85.262"
+                            width=".62995" height="2.1544" ry=".28635" />
+                          <rect transform="matrix(.97475 .22329 -.010815 .99994 0 0)" x="79.526" y="85.253"
+                            width=".62995" height="2.1544" ry=".28635" />
+                          <rect transform="matrix(.97475 .22329 -.010815 .99994 0 0)" x="80.418" y="85.262"
+                            width=".62995" height="2.1544" ry=".28635" />
+                        </g>
+                      </g>
+                      <rect class="" transform="matrix(.9832 .18253 -.096504 .99533 0 0)" x="96.132" y="75.51"
+                        width="2.2085" height="1.2627" ry=".59192" fill="#888" stroke-width=".24612" />
+                      <rect transform="matrix(.9832 .18253 -.096504 .99533 0 0)" x="99.021" y="75.49" width="2.2085"
+                        height="1.2627" ry=".59192" fill="#888" stroke-width=".24612" />
+                      <rect class="" transform="matrix(.9832 .18253 -.096504 .99533 0 0)" x="99.021" y="75.49"
+                        width="2.2085" height="1.2627" ry=".59192" fill="#ff2d2d" stroke-width=".24612" />
+                    </g>
+                  </svg>
+                </div>
+              </div>
+              <div class="node-status-right">
+                <dl class="props">
+                  <dt>Node properties</dt>
+                  <dd class="node-name"><span class="label">Node:</span> <span class="nodeval-name">{{
+                      dead.replace(/,/g, '') }}</span></dd>
+                  <dd class="node-unreach"><span class="label">Status:</span>
+                    <span class="nodeval-unreach error">Host Unreachable</span>
+                  </dd>
+                </dl>
+              </div>
+            </div>
+          </template>
         </template>
       </div>
       <!-- <p>

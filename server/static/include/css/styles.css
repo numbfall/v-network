@@ -197,18 +197,24 @@ button {
   border-radius: 0.3rem;
   justify-content: center;
   align-items: center;
+  width: 500px;
+  min-height: 250px;
+}
+.nodes-panel .node-status.dead {
+  box-shadow: 0 0 3px rgb(255, 0, 0);
+  background-color: rgba(208, 154, 154, 0.17);
 }
 .nodes-panel .node-status-left {
   padding: 0 2rem;
+  flex: 0;
 }
 .nodes-panel .node-status-left .node-indicator {
-  max-width: 100px;
-  min-width: 80px;
+  width: 90px;
 }
 .nodes-panel .node-status-right {
   word-wrap: break-word;
   padding: 0 0.8rem;
-  flex-basis: min-content;
+  flex: 1;
 }
 .nodes-panel .node-status-right .props {
   font-size: 80%;
