@@ -83,7 +83,7 @@
               <div class="ledger_pages">
                 <ul class="pagination">
                   <li v-for="p in nav.pages" :class="'page-item' + (p.active ? ' active' : '')">
-                    <a class="page-link" href="#" @click.prevent="gotoPage(p.index)" v-if="p.link">{{p.index}}</a>
+                    <a class="page-link" href="#" @click.prevent="gotoPage(p.index); detailSelected.expanded = false; detailSelected = null;" v-if="p.link">{{p.index}}</a>
                     <span class="page-text" v-else>{{p.text}}</span>
                   </li>
                 </ul>
