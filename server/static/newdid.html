@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {% include 'meta.html' %}
+</head>
+
+<body>
+  <main id="vue-outer">
+    {% raw %} 
+    <div class="panel panel-default authorize" v-if="register_new_dids">
+      <div class="panel-heading">
+        <h2>
+          <span class="fa fa-key"></span>
+          Authenticate a New DID
+        </h2>
+      </div>
+      <div class="panel-body" v-show="true">
+        <p>
+          Easily write a new DID to the ledger for new identity owners.
+        </p>
+        <form action="/register" method="get" accept-charset="utf-8" @submit.prevent="register">
+          <div class="form-group">
+            <input type="radio" value="seed" v-model="reg_info.reg_type" id="reg-seed">
+            <label for="reg-seed" class="tool-label inline">Register from seed</label>
+            &nbsp; <input type="radio" value="did" v-model="reg_info.reg_type" id="reg-did">
+            <label for="reg-did" class="tool-label inline">Register from DID</label>
+          </div>
+
+          <div class="form-group" v-if="reg_info.reg_type == 'seed'">
+            <label class="tool-label">Wallet seed (32 characters or base64)</label>
+            <input class="tool-input wallet-seed" type="text" name="seed" v-model="reg_info.seed" required>
+          </div>
+          <div class="form-group">
+            <label class="tool-label">DID <template v-if="reg_info.reg_type == 'seed'">(optional)</template></label>
+            <input class="tool-input wallet-seed" type="text" name="did" v-model="reg_info.did"
+              :required="reg_info.reg_type == 'did'">
+          </div>
+          <div class="form-group" v-if="reg_info.reg_type == 'did'">
+            <label class="tool-label">Verkey</label>
+            <input class="tool-input wallet-seed" type="text" name="verkey" v-model="reg_info.verkey" required>
+          </div>
+          <div class="form-group">
+            <label class="tool-label">Alias (optional)</label>
+            <input class="tool-input wallet-seed" type="text" name="alias" v-model="reg_info.alias">
+          </div>
+          <div class="form-group">
+            <label class="tool-label">Role</label>
+            <select name="role" v-model="reg_info.role">
+              <option value="">(None)</option>
+              <option v-for="opt in role_options" :value="opt.value">{{opt.label}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <button class="tool-button" type="submit" name="register"><span class="fa fa-sign-in left"></span>Register
+              DID</button>
+          </div>
+        </form>
+
+        <div class="register-result" v-if="reg_result">
+          <h3>Identity successfully registered:</h3>
+          <code>
+                <span v-if="reg_result.seed"><b>Seed: </b> {{reg_result.seed}}<br></span>
+                <b>DID: </b> {{reg_result.did}}<br>
+                <b>Verkey:</b> {{reg_result.verkey}}
+              </code>
+             
+        </div>
+        <div class="error register-error" v-if="reg_error">
+          Error: identity not registered.
+        </div>
+      </div>
+    </div>
+    {% endraw %}
+  </main>
+  <script src="include/js/index.js" type="text/javascript"></script>
+</body>
+
+</html>

@@ -38,58 +38,6 @@
         </p>
       </div>
 
-      <!-- <div class="columns-1 md:columns-2">
-          <div class="panel panel-default panel-ledger-status" style="display: none" v-show="ready">
-            <div class="panel-heading">
-              <h2>
-                <span class="fa fa-sitemap"></span>
-                Ledger State
-              </h2>
-            </div>
-            <div class="panel-body">
-              <div class="panel panel-node" v-if="syncing">
-                <div class="panel-body loading">
-                  <p>
-                    <span class="fa fa-info-circle"></span> Fetching transactions
-                  </p>
-                </div>
-              </div>
-              <p>
-                View the state of the ledgers:
-              </p>
-              <p>
-                <a href="/browse/domain" class="tool"><span class="fa fa-chevron-right left"></span>Domain</a>
-                <br>
-                <a href="/browse/pool" class="tool"><span class="fa fa-chevron-right left"></span>Pool</a>
-                <br>
-                <a href="/browse/config" class="tool"><span class="fa fa-chevron-right left"></span>Config</a>
-              </p>
-            </div>
-          </div>
-
-          <div class="margin-bottom:7px;">
-            <div class="panel panel-default connect">
-              <div class="panel-heading">
-                <h2>
-                  <span class="fa fa-plug"></span>
-                  Connect to the Network
-                </h2>
-              </div>
-              <div class="panel-body">
-                <p>
-                  Download the genesis transaction file to connect to the network.
-                </p>
-                <div class="form-group" style="margin-bottom: 48px;">
-                  <a href="/genesis" class="tool-button"><span class="fa fa-download left"></span>Genesis
-                    Transaction</a>
-                  <span class="tool-tag">JSON</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> -->
-
-
       <div class="nodes-panel" style="display: none" v-show="ready && ! anonymous">
         <div class="not_ready" v-if="! status">
           <div class="lds-ring">
@@ -195,6 +143,57 @@
           <img src="/include/img/v2v.webp" alt="v2v">
         </div>
       </div>
+
+      <!-- <div class="columns-1 md:columns-2">
+          <div class="panel panel-default panel-ledger-status" style="display: none" v-show="ready">
+            <div class="panel-heading">
+              <h2>
+                <span class="fa fa-sitemap"></span>
+                Ledger State
+              </h2>
+            </div>
+            <div class="panel-body">
+              <div class="panel panel-node" v-if="syncing">
+                <div class="panel-body loading">
+                  <p>
+                    <span class="fa fa-info-circle"></span> Fetching transactions
+                  </p>
+                </div>
+              </div>
+              <p>
+                View the state of the ledgers:
+              </p>
+              <p>
+                <a href="/browse/domain" class="tool"><span class="fa fa-chevron-right left"></span>Domain</a>
+                <br>
+                <a href="/browse/pool" class="tool"><span class="fa fa-chevron-right left"></span>Pool</a>
+                <br>
+                <a href="/browse/config" class="tool"><span class="fa fa-chevron-right left"></span>Config</a>
+              </p>
+            </div>
+          </div>
+
+          <div class="margin-bottom:7px;">
+            <div class="panel panel-default connect">
+              <div class="panel-heading">
+                <h2>
+                  <span class="fa fa-plug"></span>
+                  Connect to the Network
+                </h2>
+              </div>
+              <div class="panel-body">
+                <p>
+                  Download the genesis transaction file to connect to the network.
+                </p>
+                <div class="form-group" style="margin-bottom: 48px;">
+                  <a href="/genesis" class="tool-button"><span class="fa fa-download left"></span>Genesis
+                    Transaction</a>
+                  <span class="tool-tag">JSON</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
 
       <!-- <div class="panel panel-default authorize" v-if="register_new_dids">
           <div class="panel-heading">

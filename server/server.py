@@ -59,6 +59,17 @@ async def index(request):
         "INFO_SITE_URL": INFO_SITE_URL,
     }
 
+@ROUTES.get("/newdid")
+@aiohttp_jinja2.template("newdid.html")
+async def index(request):
+    return {
+        "REGISTER_NEW_DIDS": TRUST_ANCHOR._register_dids,
+        "LEDGER_INSTANCE_NAME": LEDGER_INSTANCE_NAME,
+        "WEB_ANALYTICS_SCRIPT": WEB_ANALYTICS_SCRIPT,
+        "INFO_SITE_TEXT": INFO_SITE_TEXT,
+        "INFO_SITE_URL": INFO_SITE_URL,
+    }
+
 
 @ROUTES.get("/browse/{ledger_ident:.*}")
 @aiohttp_jinja2.template("ledger.html")
