@@ -534,7 +534,6 @@ button {
 .ledger_wrapper {
 	display: flex;
 	flex-wrap: wrap;
-	min-height: 100vh;
 	justify-content: center;
 
 	.ledger_main {
@@ -678,6 +677,7 @@ button {
 		max-width: 600px;
 		min-width: 400px;
 		flex: 1;
+		min-height: 100vh;
 
 		.detail_heading {
 			font-size: 1.2rem;

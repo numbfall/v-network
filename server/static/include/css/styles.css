@@ -468,7 +468,6 @@ button {
 .ledger_wrapper {
   display: flex;
   flex-wrap: wrap;
-  min-height: 100vh;
   justify-content: center;
 }
 .ledger_wrapper .ledger_main {
@@ -595,6 +594,7 @@ button {
   max-width: 600px;
   min-width: 400px;
   flex: 1;
+  min-height: 100vh;
 }
 .ledger_wrapper .txn_table_right .detail_heading {
   font-size: 1.2rem;
