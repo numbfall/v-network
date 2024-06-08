@@ -467,11 +467,16 @@ button {
   display: flex;
   flex-wrap: wrap;
   min-height: 100vh;
+  justify-content: space-evenly;
 }
 .ledger_wrapper .ledger_main {
   margin-top: 2rem;
   margin-left: 2rem;
-  flex: 0 0 60%;
+}
+@media screen and (max-width: 1400px) {
+  .ledger_wrapper .ledger_main {
+    margin-right: 2rem;
+  }
 }
 .ledger_wrapper .ledger_main .ledger-heading {
   font-weight: 600;
@@ -532,7 +537,6 @@ button {
 .ledger_wrapper .ledger_main .txn_table_main {
   display: table;
   font-size: 90%;
-  width: 100%;
 }
 .ledger_wrapper .ledger_main .txn_table_main .txn_table_header {
   display: table-header-group;
@@ -563,15 +567,18 @@ button {
   display: table-cell;
   padding: 1.2rem;
   text-wrap: nowrap;
+  vertical-align: middle;
 }
 .ledger_wrapper .ledger_main .txn_table_main .txn_table_entries .txn_table_entry:last-child {
-  text-overflow: ellipsis;
+  text-wrap: wrap;
+  word-break: break-all;
 }
 .ledger_wrapper .txn_table_right {
   padding: 2rem;
   border-left: 1px solid #89a;
   text-wrap: wrap;
   flex: 1;
+  min-width: 400px;
 }
 .ledger_wrapper .txn_table_right .detail_heading {
   font-size: 1.2rem;
@@ -604,7 +611,7 @@ button {
   content: "# ";
 }
 .ledger_wrapper .txn_table_right textarea {
-  width: 90%;
+  width: 100%;
   height: 300px;
   padding: 2rem 2rem;
   font-family: monospace;
@@ -614,6 +621,7 @@ button {
   box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.15);
   background-color: rgb(250, 250, 250);
   text-wrap: nowrap;
+  box-sizing: border-box;
 }
 .ledger_wrapper .txn_table_right label {
   color: #919191;
