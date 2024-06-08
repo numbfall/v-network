@@ -61,7 +61,7 @@
                 <div class="txn_table_heading">Type</div>
                 <div class="txn_table_heading">Transaction ID</div>
               </div>
-              <div class="txn_table_entries" v-for="entry in txns" @click="detailClick(entry)"
+              <div class="txn_table_entries" v-for="entry in txns" @click="detailClick(entry); detailSelected.expanded = false;"
                 :class="(detailSelected && detailSelected.index === entry.index ? 'active' : '')">
                 <div class="txn_table_entry">{{entry.txnMetadata.seqNo}}</div>
                 <div class="txn_table_entry">{{entry.txnMetadata.txnTime | format_time}}</div>
@@ -83,7 +83,7 @@
               <div class="ledger_pages">
                 <ul class="pagination">
                   <li v-for="p in nav.pages" :class="'page-item' + (p.active ? ' active' : '')">
-                    <a class="page-link" href="#" @click.prevent="gotoPage(p.index); detailSelected.expanded = false; detailSelected = null;" v-if="p.link">{{p.index}}</a>
+                    <a class="page-link" href="#" @click.prevent="gotoPage(p.index); detailSelected = null;" v-if="p.link">{{p.index}}</a>
                     <span class="page-text" v-else>{{p.text}}</span>
                   </li>
                 </ul>
