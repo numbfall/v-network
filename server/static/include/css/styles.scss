@@ -199,6 +199,8 @@ button {
 
 .wrapper_outer {
 	padding: 3rem 2rem;
+	max-width: 1140px;
+	margin: 0 auto;
 }
 
 .nodes-panel {
@@ -533,7 +535,7 @@ button {
 	display: flex;
 	flex-wrap: wrap;
 	min-height: 100vh;
-	justify-content: space-evenly;
+	justify-content: center;
 
 	.ledger_main {
 		margin-top: 2rem;
@@ -556,10 +558,12 @@ button {
 
 		.ledger_nav_top {
 			display: flex;
+			flex-wrap: wrap;
 			flex-direction: row;
 			justify-content: start;
+			margin-right: 2rem;
 			padding: 1rem 0.2rem;
-			gap: 2rem;
+			gap: 1rem;
 
 			input,
 			select {
@@ -591,15 +595,11 @@ button {
 				font-size: 90%;
 				cursor: pointer;
 			}
-
-			.ledger_search {
-				display: flex;
-				gap: 1rem;
-			}
 		}
 
 		.ledger_nav_bottom {
 			display: flex;
+			flex-wrap: wrap;
 			flex-direction: row;
 			justify-content: space-between;
 			padding: 0.4rem 1.4rem;
@@ -610,6 +610,7 @@ button {
 		.txn_table_main {
 			display: table;
 			font-size: 90%;
+			width: 100%;
 
 			.txn_table_header {
 				display: table-header-group;
@@ -621,6 +622,12 @@ button {
 					font-weight: 600;
 					padding: 0.4rem 1.2rem;
 					text-wrap: nowrap;
+					&:last-child {
+						
+						@media screen and (max-width: 650px) {
+							display: none;
+						}
+					}
 				}
 			}
 
@@ -649,6 +656,10 @@ button {
 					&:last-child {
 						text-wrap: wrap;
 						word-break: break-all;
+
+						@media screen and (max-width: 650px) {
+							display: none;
+						}
 					}
 				}
 			}
@@ -658,12 +669,15 @@ button {
 
 
 	.txn_table_right {
+		margin-top: 1.5rem;
 		padding: 2rem;
-		border-left: 1px solid #89a;
-		// max-height: 100vh;
+		border: 1px solid #89a;
+		box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.12);
 		text-wrap: wrap;
-		flex: 1;
+		word-break: break-all;
+		max-width: 600px;
 		min-width: 400px;
+		flex: 1;
 
 		.detail_heading {
 			font-size: 1.2rem;

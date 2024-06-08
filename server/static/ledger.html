@@ -35,7 +35,7 @@
           <template v-if="loaded">
             <div class="ledger_nav_top">
               <div class="ledger_search">
-                <input class="ledger_search" id="query-input" placeholder="Search" size="30" :value="query"
+                <input id="query-input" placeholder="Search" size="30" :value="query"
                   @keyup.enter="updateQuery($event.target.value)" @focus="$event.target.select()">
               </div>
               <div class="ledger_filter">
