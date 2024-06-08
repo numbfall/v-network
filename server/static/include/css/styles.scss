@@ -6,13 +6,15 @@ $color_white: #fff;
 $color_pale: #e9f5ff;
 $color_error: #b55;
 $color_warning: #a83;
-$color_gray: #888;
+$color_gray: #919191;
 $color_darkgray: #333;
 $color_black: #000;
 $font-family_sans: "Open Sans", sans-serif;
 $font-family_mono: monospace;
 $color_primary: #1c6da6;
 $color_background: #0b1f61;
+$color_shadow: rgba(0, 0, 0, 0.442);
+$color_light: rgb(250, 250, 250);
 
 @keyframes blink-animation {
 	to {
@@ -210,16 +212,17 @@ button {
 		display: flex;
 		flex-direction: row;
 		padding: 0.8rem;
-		box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
-		background-color: rgba(0, 0, 0, 0.02);
+		box-shadow: 0 0 3px $color_shadow;
+		background-color: $color_light;
 		border-radius: 0.3rem;
 		justify-content: center;
 		align-items: center;
 		width: 500px;
 		min-height: 250px;
+
 		&.dead {
-			box-shadow: 0 0 3px rgb(255, 0, 0);
-			background-color: rgba(208, 154, 154, 0.17);
+			box-shadow: 0 0 3px $color_error;
+			background-color: rgb(255, 250, 250)
 		}
 	}
 
@@ -235,6 +238,7 @@ button {
 	.node-status-right {
 		word-wrap: break-word;
 		padding: 0 0.8rem;
+		margin-right: 0.4rem;
 		flex: 1;
 
 		.props {
@@ -247,11 +251,10 @@ button {
 			}
 
 			dd {
-				margin: 0.4rem 0;
-				padding: 0.4rem 0.2rem;
+				padding: 0.6rem 0.4rem;
 
 				&:not(:last-child) {
-					border-bottom: 1px dashed rgba(0, 0, 0, 0.2);
+					border-bottom: 1px dashed rgb(182, 182, 182);
 				}
 
 				.nodeval-did {
@@ -326,7 +329,8 @@ button {
 
 	.page-item {
 		&.active {
-			background-color: rgba(0, 0, 0, 0.08);
+			background-color: rgb(196, 196, 196);
+			box-shadow: inset 0 0px 5px 1px rgba(0, 0, 0, 0.12);
 
 			.page-link {
 				color: $color_darkgray;
@@ -606,7 +610,7 @@ button {
 
 			.txn_table_header {
 				display: table-header-group;
-				background-color: rgba(28, 109, 166, 0.9);
+				background-color: $color_primary;
 				color: $color_white;
 
 				.txn_table_heading {
@@ -619,18 +623,19 @@ button {
 
 			.txn_table_entries {
 				display: table-row;
-				box-shadow: 0 1px 0px 0px rgba(0, 0, 0, 0.08);
+				box-shadow: 0 1px 0px 0px rgba(0, 0, 0, 0.15);
 				// font-family: $font-family_mono;
 				font-weight: 500;
 				transition: background-color 0.5s;
 				cursor: pointer;
 
 				&.active {
-					background-color: rgba(0, 0, 0, 0.04);
+					background-color: rgb(215, 215, 215);
+					box-shadow: inset 0 0px 5px 1px rgba(0, 0, 0, 0.05);
 				}
 
 				&:hover {
-					background-color: rgba(0, 0, 0, 0.04);
+					background-color: rgb(220, 220, 220);
 				}
 
 				.txn_table_entry {
@@ -698,9 +703,9 @@ button {
 			font-family: $font-family_mono;
 			border-radius: 0.8rem;
 			resize: none;
-			border: 1px solid rgba(0, 0, 0, 0.2);
+			border: 1px solid $color_gray;
 			box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.15);
-			background-color: rgba(0, 0, 0, 0.02);
+			background-color: $color_light;
 			text-wrap: nowrap;
 		}
 
@@ -721,7 +726,7 @@ button {
 		}
 
 		.detail_txn_section {
-			border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+			border-bottom: 1px solid $color_gray;
 			text-align: right;
 			color: $color_gray;
 			font-weight: 600;
