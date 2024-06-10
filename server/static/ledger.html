@@ -290,11 +290,18 @@
                 <label>Accumulator value</label> <span>{{detailSelected.txn.data.value.accum}}</span>
               </div>
             </template>
-            <div class="detail_txn_section" :class="'arrow-' + (detailSelected.expanded ? 'up' : 'down')"
+            <button class="detail_txn_button" :class="'arrow-' + (detailSelected.expanded ? 'up' : 'down')"
               @click.prevent="toggleData(detailSelected.index)">
               Raw Data
+            </button>
+            <div class="raw_data" v-if="detailSelected.expanded">
+              <div class="raw_data_div">
+                <div class="close_pre" @click="detailSelected.expanded = false"></div>
+                <div class="raw_text_div">
+                  <pre>{{detailSelected.json}}</pre>
+                </div>
+              </div>
             </div>
-            <textarea readonly spellcheck="false" v-if="detailSelected.expanded">{{detailSelected.json}}</textarea>
           </div>
           {% endraw %}
         </div>

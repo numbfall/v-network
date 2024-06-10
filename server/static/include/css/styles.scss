@@ -539,14 +539,15 @@ button {
 	.ledger_main {
 		margin-top: 2rem;
 		margin-left: 2rem;
-		
+
 		@media screen and (max-width: 1400px) {
 			margin-right: 2rem;
-		  }
+		}
 
 		.ledger-heading {
 			font-weight: 600;
 			font-size: 1.6rem;
+			margin-right: 2rem;
 
 			.ledger_name {
 				font-size: 1rem;
@@ -625,8 +626,9 @@ button {
 					font-weight: 600;
 					padding: 0.4rem 1.2rem;
 					text-wrap: nowrap;
+
 					&:last-child {
-						
+
 						@media screen and (max-width: 650px) {
 							display: none;
 						}
@@ -719,18 +721,65 @@ button {
 			}
 		}
 
-		textarea {
+		.raw_data {
 			width: 100%;
-			height: 300px;
-			padding: 2rem 2rem;
-			font-family: $font-family_mono;
-			border-radius: 0.8rem;
-			resize: none;
-			border: 1px solid $color_gray;
-			box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.15);
-			background-color: $color_light;
-			text-wrap: nowrap;
-			box-sizing: border-box;
+			height: 100%;
+			position: fixed;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			margin: 0;
+			top: 0;
+			left: 0;
+			z-index: 101;
+			background-color: rgba(0, 0, 0, 0.85);
+
+			.raw_data_div {
+				width: 90%;
+				max-width: 1440px;
+
+				.close_pre {
+					display: flex;
+					float: right;
+					position: relative;
+					top: 5px;
+					right: 5px;
+					z-index: 102;
+					font-size: 200%;
+					cursor: pointer;
+					background-color: red;
+					padding: 0.3rem;
+					line-height: 1.1rem;
+					border-radius: 1rem;
+	
+					&:after {
+						content: "\00d7";
+						color: white;
+					}
+	
+					&:hover {
+						background-color: darkred;
+					}
+				}
+
+				.raw_text_div {
+					border-radius: 0.8rem;
+					border: 1px solid $color_gray;
+					box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.15);
+					background-color: $color_light;
+					padding-left: 2rem;
+					padding-bottom: 2rem;
+
+					pre {
+						max-height: 80vh;
+						height: 100%;
+						width: 100%;
+						font-family: $font-family_mono;
+						text-wrap: wrap;
+						overflow-y: auto;
+					}
+				}
+			}
 		}
 
 		label {
@@ -747,6 +796,19 @@ button {
 		div {
 			margin: 0.4rem 0;
 			font-weight: 500;
+		}
+
+		.detail_txn_button {
+			margin-top: 2rem;
+			padding: 0.6rem 1rem;
+			color: $color_white;
+			background-color: $color_primary;
+			font-weight: 600;
+			cursor: pointer;
+
+			&:hover {
+				background-color: $color_background;
+			}
 		}
 
 		.detail_txn_section {
