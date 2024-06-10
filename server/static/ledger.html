@@ -33,7 +33,7 @@
           {% endraw %}
         </div>
         <template v-if="loaded">
-          <div class="ledger_nav_top">
+          <div class="ledger_nav_top" v-if="nav.pages">
             <div class="ledger_search">
               <input id="query-input" placeholder="Search" size="30" :value="query"
                 @keyup.enter="updateQuery($event.target.value)" @focus="$event.target.select()">
@@ -50,7 +50,9 @@
               Clear filter
             </div>
           </div>
-
+          <div v-else class="ledger_nav_top">
+            <a href="#" @click.prevent="showEntry(null)"><span>&#8592;</span> Back to all transactions</a>
+          </div>
 
           {% raw %}
 
@@ -77,7 +79,7 @@
               </p>
             </div> -->
 
-          <div class="ledger_nav_bottom">
+          <div class="ledger_nav_bottom" v-if="nav.pages">
             <div class="ledger_count">
               {{nav.total || 0}} record(s)
             </div>

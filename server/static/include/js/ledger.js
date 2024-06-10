@@ -146,6 +146,7 @@ var app = new Vue({
     },
     showEntry: function (ident) {
       this.navToPage(ident);
+      this.detailSelected = '';
     },
     showLedger: function (value) {
       this.ledger = value;
@@ -287,6 +288,9 @@ var app = new Vue({
         };
         this.loadTxns(data.results);
       }
+      if (this.nav.pages == null) {
+        this.detailClick(this.txns[0]);
+      };
       this.error = false;
       this.loaded = true;
       this.loading = false;

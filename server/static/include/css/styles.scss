@@ -564,6 +564,10 @@ button {
 			padding: 1rem 0.2rem;
 			gap: 1rem;
 
+			a {
+				font-weight: 500;
+			}
+
 			input,
 			select {
 				border: 1px solid $color_gray;

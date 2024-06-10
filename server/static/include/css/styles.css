@@ -497,6 +497,9 @@ button {
   padding: 1rem 0.2rem;
   gap: 1rem;
 }
+.ledger_wrapper .ledger_main .ledger_nav_top a {
+  font-weight: 500;
+}
 .ledger_wrapper .ledger_main .ledger_nav_top input,
 .ledger_wrapper .ledger_main .ledger_nav_top select {
   border: 1px solid #919191;
