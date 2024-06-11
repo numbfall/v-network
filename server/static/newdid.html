@@ -3,10 +3,111 @@
 
 <head>
   {% include 'meta.html' %}
+  <style>
+   .panel {
+	margin-bottom: 1.5rem;
+	overflow: hidden;
+}
+.panel-heading, .panel-body {
+	overflow: hidden;
+	padding: 0.25rem 0.7rem;
+}
+.panel-body p {
+	margin: 0.5rem 0;
+}
+.panel-default {
+	background: #f0f3ff;
+	box-shadow: 0 4px 3px 3px rgba(0, 0, 0, 0.02);
+}
+.panel-default .panel-heading {
+	background: #1c6da6;
+	border-bottom: 1px solid #eee;
+	color: #fafaec;
+}
+.panel-default > .panel-body {
+	border: 1px solid #e0e6ee;
+	border-radius: 0.5rem;
+	padding-top: 10px;
+}
+.panel-default > .panel-heading {
+  border-radius: 0.5rem 0.5rem 0 0;
+}
+.panel-default > .panel-heading + .panel-body {
+  border-top: none;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
+
+.panel-info {
+	background: #f0f3ff;
+	border: 1px solid #89a;
+	border-radius: 0.5rem;
+	box-shadow: 0 4px 3px 3px rgba(0, 0, 0, 0.02);
+}
+
+.panel-side {
+	background-color: #f7f6f6;
+	border: 2px solid #f0ecec;
+	border-radius: 0.5rem;
+	box-shadow: 0 4px 3px 3px rgba(0, 0, 0, 0.02);
+}
+.panel-side .panel-heading {
+	color: #585555;
+}
+.panel-side .panel-heading::after {
+	background: #fdfdfd;
+	border-bottom: 1px solid #ebe6e6;
+	border-radius: 3px;
+	content: ' ';
+	display: block;
+	height: 3px;
+}
+
+.panel-heading h2 {
+	padding: 0;
+	margin: 0;
+}
+
+.top-label {
+	color: #555;
+	font-size: 95%;
+	font-weight: 600;
+	line-height: 1.6;
+}
+.tool-tag {
+	-background: rgba(254, 253, 237, 1.0);
+	border-radius: 2px;
+	-border: 1px solid rgba(215, 220, 255, 0.9);
+	color: #555;
+	display: inline-block;
+	font-size: 0.75rem;
+	font-weight: 600;
+	margin-left: 1rem;
+	padding: 1.5px 4px;
+	vertical-align: 0.1rem;
+}
+
+.error {
+	color: #b55;
+}
+.warning {
+	color: #a83;
+}
+.panel_wrapper {
+  max-width: 1440px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 2rem auto;
+}
+</style>
 </head>
 
 <body>
+  {% include 'header.html' %}
   <main id="vue-outer">
+    <div class="panel_wrapper">
     {% raw %} 
     <div class="panel panel-default authorize" v-if="register_new_dids">
       <div class="panel-heading">
@@ -72,6 +173,7 @@
       </div>
     </div>
     {% endraw %}
+  </div>
   </main>
   <script src="include/js/index.js" type="text/javascript"></script>
 </body>

@@ -114,9 +114,6 @@
                     row.uptime }}</span></dd>
                 <dd class="node-txns"><span class="label">Txns:</span> <span class="nodeval-txns">{{ row.txns
                     }}</span></dd>
-                <!-- <dd class="node-unreach" v-if="row.unreachable"><span class="lavel">Unreachable hosts:</span>
-                  <span class="nodeval-unreach">{{ row.unreachable }}</span>
-                </dd> -->
                 <dd class="node-indyver"><span class="label">indy-node version:</span> <span class="nodeval-indyver">{{
                     row.indy_version }}</span></dd>
               </dl>
@@ -184,12 +181,7 @@
           </template>
         </template>
       </div>
-      <!-- <p>
-              View detailed information about the status of the running validator nodes:
-            </p>
-            <p>
-              <a href="/status/text" class="tool"><span class="fa fa-chevron-right left"></span>Detailed Status</a>
-            </p> -->
+
       <div class="detail-hero">
         <div class="detail-hero-left">
           <div>
@@ -204,140 +196,6 @@
         </div>
       </div>
 
-      <!-- <div class="columns-1 md:columns-2">
-          <div class="panel panel-default panel-ledger-status" style="display: none" v-show="ready">
-            <div class="panel-heading">
-              <h2>
-                <span class="fa fa-sitemap"></span>
-                Ledger State
-              </h2>
-            </div>
-            <div class="panel-body">
-              <div class="panel panel-node" v-if="syncing">
-                <div class="panel-body loading">
-                  <p>
-                    <span class="fa fa-info-circle"></span> Fetching transactions
-                  </p>
-                </div>
-              </div>
-              <p>
-                View the state of the ledgers:
-              </p>
-              <p>
-                <a href="/browse/domain" class="tool"><span class="fa fa-chevron-right left"></span>Domain</a>
-                <br>
-                <a href="/browse/pool" class="tool"><span class="fa fa-chevron-right left"></span>Pool</a>
-                <br>
-                <a href="/browse/config" class="tool"><span class="fa fa-chevron-right left"></span>Config</a>
-              </p>
-            </div>
-          </div>
-
-          <div class="margin-bottom:7px;">
-            <div class="panel panel-default connect">
-              <div class="panel-heading">
-                <h2>
-                  <span class="fa fa-plug"></span>
-                  Connect to the Network
-                </h2>
-              </div>
-              <div class="panel-body">
-                <p>
-                  Download the genesis transaction file to connect to the network.
-                </p>
-                <div class="form-group" style="margin-bottom: 48px;">
-                  <a href="/genesis" class="tool-button"><span class="fa fa-download left"></span>Genesis
-                    Transaction</a>
-                  <span class="tool-tag">JSON</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> -->
-
-      <!-- <div class="panel panel-default authorize" v-if="register_new_dids">
-          <div class="panel-heading">
-            <h2>
-              <span class="fa fa-key"></span>
-              Authenticate a New DID
-            </h2>
-          </div>
-          <div class="panel-body" v-show="true">
-            <p>
-              Easily write a new DID to the ledger for new identity owners.
-            </p>
-            <form action="/register" method="get" accept-charset="utf-8" @submit.prevent="register">
-              <div class="form-group">
-                <input type="radio" value="seed" v-model="reg_info.reg_type" id="reg-seed">
-                  <label for="reg-seed" class="tool-label inline">Register from seed</label>
-                &nbsp; <input type="radio" value="did" v-model="reg_info.reg_type" id="reg-did">
-                  <label for="reg-did" class="tool-label inline">Register from DID</label>
-              </div>
-  
-              <div class="form-group" v-if="reg_info.reg_type == 'seed'">
-                <label class="tool-label">Wallet seed (32 characters or base64)</label>
-                <input
-                  class="tool-input wallet-seed"
-                  type="text"
-                  name="seed"
-                  v-model="reg_info.seed"
-                  required
-                >
-              </div>
-              <div class="form-group">
-                <label class="tool-label">DID <template v-if="reg_info.reg_type == 'seed'">(optional)</template></label>
-                <input
-                  class="tool-input wallet-seed"
-                  type="text"
-                  name="did"
-                  v-model="reg_info.did"
-                  :required="reg_info.reg_type == 'did'"
-                >
-              </div>
-              <div class="form-group" v-if="reg_info.reg_type == 'did'">
-                <label class="tool-label">Verkey</label>
-                <input
-                  class="tool-input wallet-seed"
-                  type="text"
-                  name="verkey"
-                  v-model="reg_info.verkey"
-                  required
-                >
-              </div>
-              <div class="form-group">
-                <label class="tool-label">Alias (optional)</label>
-                <input
-                  class="tool-input wallet-seed"
-                  type="text"
-                  name="alias"
-                  v-model="reg_info.alias"
-                >
-              </div>
-              <div class="form-group">
-                <label class="tool-label">Role</label>
-                <select name="role" v-model="reg_info.role">
-                  <option value="">(None)</option>
-                  <option v-for="opt in role_options" :value="opt.value">{{opt.label}}</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <button class="tool-button" type="submit" name="register"><span class="fa fa-sign-in left"></span>Register DID</button>
-              </div>
-            </form>
-  
-            <div class="register-result" v-if="reg_result">
-              <h3>Identity successfully registered:</h3>
-              <code>
-                <span v-if="reg_result.seed"><b>Seed: </b> {{reg_result.seed}}<br></span>
-                <b>DID: </b> {{reg_result.did}}<br>
-                <b>Verkey:</b> {{reg_result.verkey}}
-              </code>
-            </div>
-            <div class="error register-error" v-if="reg_error">
-              Error: identity not registered.
-            </div>
-          </div>
-        </div> -->
     </div>
   </main>
   {% endraw %}
