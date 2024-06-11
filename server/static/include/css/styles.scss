@@ -103,13 +103,13 @@ body {
 
 header {
 	background-color: $color_primary;
+	display: flex;
+	justify-content: center;
 
 	.container {
 		max-width: 1140px;
+		flex: 1;
 		display: flex;
-		justify-content: flex-end;
-		align-items: center;
-		margin: 0 auto;
 		flex-wrap: wrap;
 	}
 
@@ -683,7 +683,6 @@ button {
 		max-width: 600px;
 		min-width: 400px;
 		flex: 1;
-		min-height: 100vh;
 
 		.detail_heading {
 			font-size: 1.2rem;
@@ -742,21 +741,21 @@ button {
 					display: flex;
 					float: right;
 					position: relative;
-					top: 5px;
-					right: 5px;
+					top: 10px;
+					right: 10px;
 					z-index: 102;
 					font-size: 200%;
 					cursor: pointer;
-					background-color: red;
+					background-color: rgb(226, 26, 26);
 					padding: 0.3rem;
 					line-height: 1.1rem;
-					border-radius: 1rem;
-	
+					border-radius: 0.2rem;
+
 					&:after {
 						content: "\00d7";
 						color: white;
 					}
-	
+
 					&:hover {
 						background-color: darkred;
 					}
@@ -765,13 +764,14 @@ button {
 				.raw_text_div {
 					border-radius: 0.8rem;
 					border: 1px solid $color_gray;
-					box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.15);
+					box-shadow: inset 0 0 5px 2px rgba(0, 0, 0, 0.15);
 					background-color: $color_light;
 					padding-left: 2rem;
 					padding-bottom: 2rem;
 
 					pre {
 						max-height: 80vh;
+						font-size: 90%;
 						height: 100%;
 						width: 100%;
 						font-family: $font-family_mono;
@@ -835,6 +835,31 @@ button {
 					content: "\2191";
 				}
 			}
+		}
+	}
+
+}
+
+main {
+	min-height: calc(100vh - 200px);
+}
+
+footer {
+	background-color: $color_primary;
+	color: $color_white;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+    height: 100px;
+
+	.footer_wrapper {
+		flex: 1;
+		max-width: 1440px;
+		display: flex;
+		justify-content: space-around;
+		a {
+			font-weight: 500;
+			color: white;
 		}
 	}
 
