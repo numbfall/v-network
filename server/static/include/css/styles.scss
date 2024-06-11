@@ -321,6 +321,7 @@ button {
 		display: block;
 		min-width: 1.5em;
 		padding: 0.25em 0.8em;
+		color: inherit;
 	}
 
 	.page-text {
@@ -535,6 +536,7 @@ button {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
+	margin-bottom: 2rem;
 
 	.ledger_main {
 		margin-top: 2rem;

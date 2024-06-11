@@ -283,6 +283,7 @@ button {
   display: block;
   min-width: 1.5em;
   padding: 0.25em 0.8em;
+  color: inherit;
 }
 .pagination .page-text {
   cursor: default;
@@ -469,6 +470,7 @@ button {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  margin-bottom: 2rem;
 }
 .ledger_wrapper .ledger_main {
   margin-top: 2rem;
