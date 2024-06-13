@@ -582,8 +582,9 @@ button {
   vertical-align: middle;
 }
 .ledger_wrapper .ledger_main .txn_table_main .txn_table_entries .txn_table_entry:last-child {
-  text-wrap: wrap;
-  word-break: break-all;
+  text-overflow: ellipsis;
+  max-width: 450px;
+  overflow: hidden;
 }
 @media screen and (max-width: 650px) {
   .ledger_wrapper .ledger_main .txn_table_main .txn_table_entries .txn_table_entry:last-child {

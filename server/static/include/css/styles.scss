@@ -661,8 +661,9 @@ button {
 					vertical-align: middle;
 
 					&:last-child {
-						text-wrap: wrap;
-						word-break: break-all;
+						text-overflow: ellipsis;
+						max-width: 450px;
+						overflow: hidden;
 
 						@media screen and (max-width: 650px) {
 							display: none;
