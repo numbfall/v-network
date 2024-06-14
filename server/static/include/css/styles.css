@@ -540,6 +540,9 @@ button {
   align-items: center;
   font-weight: 500;
 }
+.ledger_wrapper .ledger_main .ledger_nav_bottom .ledger_count {
+  margin-right: 2rem;
+}
 .ledger_wrapper .ledger_main .txn_table_main {
   display: table;
   font-size: 90%;

@@ -611,6 +611,10 @@ button {
 			padding: 0.4rem 1.4rem;
 			align-items: center;
 			font-weight: 500;
+
+			.ledger_count {
+				margin-right: 2rem;
+			}
 		}
 
 		.txn_table_main {
@@ -854,13 +858,14 @@ footer {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-    height: 100px;
+	height: 100px;
 
 	.footer_wrapper {
 		flex: 1;
 		max-width: 1440px;
 		display: flex;
 		justify-content: space-around;
+
 		a {
 			font-weight: 500;
 			color: white;
