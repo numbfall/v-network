@@ -474,11 +474,12 @@ button {
 }
 .ledger_wrapper .ledger_main {
   margin-top: 2rem;
-  margin-left: 2rem;
 }
 @media screen and (max-width: 1400px) {
   .ledger_wrapper .ledger_main {
     margin-right: 2rem;
+    margin-left: 2rem;
+    overflow: hidden;
   }
 }
 .ledger_wrapper .ledger_main .ledger-heading {
@@ -546,7 +547,6 @@ button {
 .ledger_wrapper .ledger_main .txn_table_main {
   display: table;
   font-size: 90%;
-  width: 100%;
 }
 .ledger_wrapper .ledger_main .txn_table_main .txn_table_header {
   display: table-header-group;
@@ -572,11 +572,11 @@ button {
   cursor: pointer;
 }
 .ledger_wrapper .ledger_main .txn_table_main .txn_table_entries.active {
-  background-color: rgb(215, 215, 215);
+  background-color: rgb(235, 235, 235);
   box-shadow: inset 0 0px 5px 1px rgba(0, 0, 0, 0.05);
 }
 .ledger_wrapper .ledger_main .txn_table_main .txn_table_entries:hover {
-  background-color: rgb(220, 220, 220);
+  background-color: rgb(225, 225, 225);
 }
 .ledger_wrapper .ledger_main .txn_table_main .txn_table_entries .txn_table_entry {
   display: table-cell;
@@ -585,8 +585,8 @@ button {
   vertical-align: middle;
 }
 .ledger_wrapper .ledger_main .txn_table_main .txn_table_entries .txn_table_entry:last-child {
+  max-width: 500px;
   text-overflow: ellipsis;
-  max-width: 450px;
   overflow: hidden;
 }
 @media screen and (max-width: 650px) {
@@ -595,16 +595,14 @@ button {
   }
 }
 .ledger_wrapper .txn_table_right {
-  margin-top: 1.5rem;
+  margin-top: 2rem;
   margin-bottom: 2rem;
   padding: 2rem;
   border: 1px solid #89a;
   box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.12);
   text-wrap: wrap;
   word-break: break-all;
-  max-width: 600px;
-  min-width: 400px;
-  flex: 1;
+  width: 550px;
 }
 .ledger_wrapper .txn_table_right .detail_heading {
   font-size: 1.2rem;
@@ -690,6 +688,8 @@ button {
   font-family: monospace;
   text-wrap: wrap;
   overflow-y: auto;
+  box-sizing: border-box;
+  padding-right: 50px;
 }
 .ledger_wrapper .txn_table_right label {
   color: #919191;
