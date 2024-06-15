@@ -12,7 +12,7 @@ $color_black: #000;
 $font-family_sans: "Open Sans", sans-serif;
 $font-family_mono: monospace;
 $color_primary: #1c6da6;
-$color_background: #0b1f61;
+$color_background: #15396c;
 $color_shadow: rgba(0, 0, 0, 0.442);
 $color_light: rgb(250, 250, 250);
 
@@ -853,12 +853,14 @@ main {
 }
 
 footer {
-	background-color: $color_primary;
+	background-color: $color_background;
 	color: $color_white;
 	display: flex;
+	flex-wrap: wrap;
 	align-items: center;
 	justify-content: center;
-	height: 100px;
+	min-height: 100px;
+	padding: 2rem 0;
 
 	.footer_wrapper {
 		flex: 1;
@@ -866,10 +868,20 @@ footer {
 		display: flex;
 		justify-content: space-around;
 
-		a {
-			font-weight: 500;
-			color: white;
+		li {
+			font-weight: 600;
+
+			a {
+				font-weight: 300;
+				color: white;
+				text-decoration: underline;
+			}
+
+			&:first-child {
+				margin-bottom: 0.8rem;
+			}
 		}
+
 	}
 
 }

@@ -153,7 +153,7 @@ header li a {
   padding: 1em 1.75em;
 }
 header li a:hover {
-  background-color: #0b1f61;
+  background-color: #15396c;
 }
 
 a {
@@ -435,7 +435,7 @@ button {
   text-wrap: nowrap;
 }
 .button-link:hover {
-  background-color: #0b1f61;
+  background-color: #15396c;
 }
 
 .detail-hero {
@@ -713,7 +713,7 @@ button {
   cursor: pointer;
 }
 .ledger_wrapper .txn_table_right .detail_txn_button:hover {
-  background-color: #0b1f61;
+  background-color: #15396c;
 }
 .ledger_wrapper .txn_table_right .detail_txn_section {
   border-bottom: 1px solid #919191;
@@ -742,12 +742,14 @@ main {
 }
 
 footer {
-  background-color: #1c6da6;
+  background-color: #15396c;
   color: #fff;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  height: 100px;
+  min-height: 100px;
+  padding: 2rem 0;
 }
 footer .footer_wrapper {
   flex: 1;
@@ -755,9 +757,16 @@ footer .footer_wrapper {
   display: flex;
   justify-content: space-around;
 }
-footer .footer_wrapper a {
-  font-weight: 500;
+footer .footer_wrapper li {
+  font-weight: 600;
+}
+footer .footer_wrapper li a {
+  font-weight: 300;
   color: white;
+  text-decoration: underline;
+}
+footer .footer_wrapper li:first-child {
+  margin-bottom: 0.8rem;
 }
 
 /*# sourceMappingURL=styles.css.map */
