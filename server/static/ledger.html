@@ -294,7 +294,7 @@
               @click.prevent="toggleData(detailSelected.index)">
               Raw Data
             </button>
-            <div class="raw_data" v-if="detailSelected.expanded">
+            <div class="raw_data" v-if="detailSelected && detailSelected.expanded">
               <div class="raw_data_div">
                 <div class="close_pre" @click="detailSelected.expanded = false"></div>
                 <div class="raw_text_div">
