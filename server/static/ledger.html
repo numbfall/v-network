@@ -67,10 +67,11 @@
               @click="detailClick(entry); detailSelected.expanded = false;"
               :class="(detailSelected && detailSelected.index === entry.index ? 'active' : '')">
               <div class="txn_table_entry">{{entry.txnMetadata.seqNo}}</div>
-              <div class="txn_table_entry">{{entry.txnMetadata.txnTime | format_time}}</div>
+              <div v-if="entry.txnMetadata.txnTime" class="txn_table_entry">{{entry.txnMetadata.txnTime | format_time}}</div>
+              <div v-else class="txn_table_entry">Time Unavailable</div>
               <div class="txn_table_entry">{{txnType(entry.txn.type)}}</div>
               <div v-if="entry.txnMetadata.txnId" class="txn_table_entry">{{entry.txnMetadata.txnId}}</div>
-              <div v-else class="txn_table_entry error">Transaction ID Not Available</div>
+              <div v-else class="txn_table_entry">From: {{entry.data.dest}}</div>
             </div>
           </div>
           <!-- <div class="error" v-else>
