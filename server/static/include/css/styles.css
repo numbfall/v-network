@@ -93,6 +93,9 @@ body {
   line-height: 1.45;
   margin: 0;
 }
+body:has(.raw_data) {
+  overflow: hidden;
+}
 
 header {
   background-color: #1c6da6;
@@ -194,15 +197,17 @@ button {
   display: flex;
   flex-direction: row;
   padding: 0.8rem;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.442);
+  box-shadow: 0 5px 15px -5px rgba(0, 0, 0, 0.242);
+  border: 1px solid rgb(230, 230, 230);
   background-color: rgb(250, 250, 250);
-  border-radius: 0.3rem;
+  border-radius: 6px;
   justify-content: center;
   align-items: center;
   width: 500px;
   min-height: 250px;
 }
 .nodes-panel .node-status.dead {
+  border: 1px solid #b55;
   box-shadow: 0 0 3px #b55;
   background-color: rgb(255, 250, 250);
 }
@@ -546,7 +551,13 @@ button {
 }
 .ledger_wrapper .ledger_main .txn_table_main {
   display: table;
+  border-left: 1px solid #919191;
+  background-clip: border-box;
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+  overflow: hidden;
   font-size: 90%;
+  box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.12);
 }
 .ledger_wrapper .ledger_main .txn_table_main .txn_table_header {
   display: table-header-group;
@@ -566,14 +577,28 @@ button {
 }
 .ledger_wrapper .ledger_main .txn_table_main .txn_table_entries {
   display: table-row;
-  box-shadow: 0 1px 0px 0px rgba(0, 0, 0, 0.15);
   font-weight: 500;
   transition: background-color 0.5s;
   cursor: pointer;
+  position: relative;
+}
+.ledger_wrapper .ledger_main .txn_table_main .txn_table_entries:last-child::after {
+  border-bottom-left-radius: 6px;
+}
+.ledger_wrapper .ledger_main .txn_table_main .txn_table_entries::after {
+  content: "";
+  border-bottom: 1px solid #919191;
+  position: absolute;
+  display: block;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
 }
 .ledger_wrapper .ledger_main .txn_table_main .txn_table_entries.active {
   background-color: rgb(235, 235, 235);
-  box-shadow: inset 0 0px 5px 1px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 0 0px 3px 1px rgba(0, 0, 0, 0.09);
 }
 .ledger_wrapper .ledger_main .txn_table_main .txn_table_entries:hover {
   background-color: rgb(225, 225, 225);
@@ -599,7 +624,9 @@ button {
   margin-bottom: 2rem;
   padding: 2rem;
   border: 1px solid #89a;
-  box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.12);
+  border-radius: 6px;
+  box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.12);
+  background-color: white;
   text-wrap: wrap;
   word-break: break-all;
   width: 550px;
@@ -645,7 +672,7 @@ button {
   top: 0;
   left: 0;
   z-index: 101;
-  background-color: rgba(0, 0, 0, 0.85);
+  background-color: rgba(0, 0, 0, 0.75);
 }
 .ledger_wrapper .txn_table_right .raw_data .raw_data_div {
   width: 90%;
@@ -673,10 +700,10 @@ button {
   background-color: darkred;
 }
 .ledger_wrapper .txn_table_right .raw_data .raw_data_div .raw_text_div {
-  border-radius: 0.8rem;
-  border: 1px solid #919191;
-  box-shadow: inset 0 0 5px 2px rgba(0, 0, 0, 0.15);
-  background-color: rgb(250, 250, 250);
+  border-radius: 6px;
+  border: 1px solid #fff;
+  box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.15), 0 0 25px 3px rgba(0, 0, 0, 0.12);
+  background-color: #fff;
   padding-left: 2rem;
   padding-bottom: 2rem;
 }

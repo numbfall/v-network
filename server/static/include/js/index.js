@@ -23,7 +23,7 @@ var app = new Vue({
   },
   mounted: function () {
     this.fetchStatus();
-    this.timer = setInterval(this.fetchStatus, 1000); 
+    // this.timer = setInterval(this.fetchStatus, 1000); 
   },
   beforeDestroy() {  
     clearInterval(this.ticker);
